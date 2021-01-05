@@ -1,0 +1,2456 @@
+
+
+Microchip Technology PIC18 LITE Macro Assembler V2.00 build -1524193055 
+                                                                                               Tue Jun 11 15:22:23 2019
+
+Microchip Technology Omniscient Code Generator v2.00 (Free mode) build 20180527130849
+     1  0000                     
+     2                           ; Version 2.00
+     3                           ; Generated 27/05/2018 GMT
+     4                           
+     5                           ; 
+     6                           ; Copyright © 2018, Microchip Technology Inc. and its subsidiaries ("Microchip")
+     7                           ; All rights reserved.
+     8                           ; 
+     9                           ; This software is developed by Microchip Technology Inc. and its subsidiaries ("Microch
+                                 ip").
+    10                           ; 
+    11                           ; Redistribution and use in source and binary forms, with or without modification, are
+    12                           ; permitted provided that the following conditions are met:
+    13                           ; 
+    14                           ;     1. Redistributions of source code must retain the above copyright notice, this lis
+                                 t of
+    15                           ;        conditions and the following disclaimer.
+    16                           ; 
+    17                           ;     2. Redistributions in binary form must reproduce the above copyright notice, this 
+                                 list
+    18                           ;        of conditions and the following disclaimer in the documentation and/or other
+    19                           ;        materials provided with the distribution.
+    20                           ; 
+    21                           ;     3. Microchip's name may not be used to endorse or promote products derived from th
+                                 is
+    22                           ;        software without specific prior written permission.
+    23                           ; 
+    24                           ; THIS SOFTWARE IS PROVIDED BY MICROCHIP "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES,
+
+    25                           ; INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS F
+                                 OR
+    26                           ; PURPOSE ARE DISCLAIMED.  IN NO EVENT SHALL MICROCHIP BE LIABLE FOR ANY DIRECT, INDIREC
+                                 T,
+    27                           ; INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING BUT NOT LIMITED TO
+                                 
+    28                           ; PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA OR PROFITS; OR BUSINESS
+                                 
+    29                           ; INTERRUPTION) HOWSOEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, ST
+                                 RICT
+    30                           ; LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE U
+                                 SE OF
+    31                           ; THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    32                           ; 
+    33                           
+    34                           
+    35                           ; 
+    36                           ; Code-generator required, PIC18F46K42 Definitions
+    37                           ; 
+    38  0000                     fsr0 equ 03FE9h
+    39  0000                     fsr0h equ 03FEAh
+    40  0000                     fsr0l equ 03FE9h
+    41  0000                     fsr1 equ 03FE1h
+    42  0000                     fsr1h equ 03FE2h
+    43  0000                     fsr1l equ 03FE1h
+    44  0000                     fsr2 equ 03FD9h
+    45  0000                     fsr2h equ 03FDAh
+    46  0000                     fsr2l equ 03FD9h
+    47  0000                     indf0 equ 03FEFh
+    48  0000                     indf1 equ 03FE7h
+    49  0000                     indf2 equ 03FDFh
+    50  0000                     intcon equ 03FD2h
+    51  0000                     nvmcon equ 039E5h
+    52  0000                     pcl equ 03FF9h
+    53  0000                     pclath equ 03FFAh
+    54  0000                     pclatu equ 03FFBh
+    55  0000                     plusw0 equ 03FEBh
+    56  0000                     plusw1 equ 03FE3h
+    57  0000                     plusw2 equ 03FDBh
+    58  0000                     postdec0 equ 03FEDh
+    59  0000                     postdec1 equ 03FE5h
+    60  0000                     postdec2 equ 03FDDh
+    61  0000                     postinc0 equ 03FEEh
+    62  0000                     postinc1 equ 03FE6h
+    63  0000                     postinc2 equ 03FDEh
+    64  0000                     preinc0 equ 03FECh
+    65  0000                     preinc1 equ 03FE4h
+    66  0000                     preinc2 equ 03FDCh
+    67  0000                     prod equ 03FF3h
+    68  0000                     prodh equ 03FF4h
+    69  0000                     prodl equ 03FF3h
+    70  0000                     status equ 03FD8h
+    71  0000                     tablat equ 03FF5h
+    72  0000                     tblptr equ 03FF6h
+    73  0000                     tblptrh equ 03FF7h
+    74  0000                     tblptrl equ 03FF6h
+    75  0000                     tblptru equ 03FF8h
+    76  0000                     tosl equ 03FFDh
+    77  0000                     wreg equ 03FE8h
+    78  0000                     
+     2                           opt pagewidth 120
+     3  0000                     byte0	macro	val
+     4                           	(getbyte(val,0))
+     5                           endm
+     6  0000                     byte1	macro	val
+     7                           	(getbyte(val,1))
+     8                           endm
+     9  0000                     byte2	macro	val
+    10                           	(getbyte(val,2))
+    11                           endm
+    12  0000                     byte3	macro	val
+    13                           	(getbyte(val,3))
+    14                           endm
+    15  0000                     byte4	macro	val
+    16                           	(getbyte(val,4))
+    17                           endm
+    18  0000                     byte5	macro	val
+    19                           	(getbyte(val,5))
+    20                           endm
+    21  0000                     byte6	macro	val
+    22                           	(getbyte(val,6))
+    23                           endm
+    24  0000                     byte7	macro	val
+    25                           	(getbyte(val,7))
+    26                           endm
+    27  0000                     getword	macro	val,pos
+    28                           	(((val) >> (8 * pos)) and 0xffff)
+    29                           endm
+    30  0000                     word0	macro	val
+    31                           	(getword(val,0))
+    32                           endm
+    33  0000                     word1	macro	val
+    34                           	(getword(val,2))
+    35                           endm
+    36  0000                     word2	macro	val
+    37                           	(getword(val,4))
+    38                           endm
+    39  0000                     word3	macro	val
+    40                           	(getword(val,6))
+    41                           endm
+    42  0000                     gettword	macro	val,pos
+    43                           	(((val) >> (8 * pos)) and 0xffffff)
+    44                           endm
+    45  0000                     tword0	macro	val
+    46                           	(gettword(val,0))
+    47                           endm
+    48  0000                     tword1	macro	val
+    49                           	(gettword(val,3))
+    50                           endm
+    51  0000                     tword2	macro	val
+    52                           	(gettword(val,6))
+    53                           endm
+    54  0000                     getdword	macro	val,pos
+    55                           	(((val) >> (8 * pos)) and 0xffffffff)
+    56                           endm
+    57  0000                     dword0	macro	val
+    58                           	(getdword(val,0))
+    59                           endm
+    60  0000                     dword1	macro	val
+    61                           	(getdword(val,4))
+    62                           endm
+    63  0000                     clrc   macro
+    64                           	bcf	status,0
+    65                           endm
+    66  0000                     setc   macro
+    67                           	bsf	status,0
+    68                           endm
+    69  0000                     clrz   macro
+    70                           	bcf	status,2
+    71                           endm
+    72  0000                     setz   macro
+    73                           	bsf	status,2
+    74                           endm
+    75  0000                     skipnz macro
+    76                           	btfsc	status,2
+    77                           endm
+    78  0000                     skipz  macro
+    79                           	btfss	status,2
+    80                           endm
+    81  0000                     skipnc macro
+    82                           	btfsc	status,0
+    83                           endm
+    84  0000                     skipc  macro
+    85                           	btfss	status,0
+    86                           endm
+    87  0000                     pushw macro
+    88                           	movwf postinc1
+    89                           endm
+    90  0000                     pushf macro arg1
+    91                           	movff arg1, postinc1
+    92                           endm
+    93  0000                     popw macro
+    94                           	movf postdec1,f
+    95                           	movf indf1,w
+    96                           endm
+    97  0000                     popf macro arg1
+    98                           	movf postdec1,f
+    99                           	movff indf1,arg1
+   100                           endm
+   101  0000                     popfc macro arg1
+   102                           	movff plusw1,arg1
+   103                           	decfsz fsr1,f
+   104                           endm
+   105  0000                     	global	__ramtop
+   106                           	global	__accesstop
+   107                           # 250 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   108                           STATUS_CSHAD equ 03880h ;# 
+   109  0000                     # 339 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   110                           WREG_CSHAD equ 03881h ;# 
+   111  0000                     # 359 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   112                           BSR_CSHAD equ 03882h ;# 
+   113  0000                     # 366 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   114                           SHADCON equ 03883h ;# 
+   115  0000                     # 386 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   116                           STATUS_SHAD equ 03884h ;# 
+   117  0000                     # 475 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   118                           WREG_SHAD equ 03885h ;# 
+   119  0000                     # 495 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   120                           BSR_SHAD equ 03886h ;# 
+   121  0000                     # 502 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   122                           PCLATH_SHAD equ 03887h ;# 
+   123  0000                     # 522 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   124                           PCLATU_SHAD equ 03888h ;# 
+   125  0000                     # 542 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   126                           FSR0SH equ 03889h ;# 
+   127  0000                     # 549 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   128                           FSR0L_SHAD equ 03889h ;# 
+   129  0000                     # 569 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   130                           FSR0H_SHAD equ 0388Ah ;# 
+   131  0000                     # 589 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   132                           FSR1SH equ 0388Bh ;# 
+   133  0000                     # 596 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   134                           FSR1L_SHAD equ 0388Bh ;# 
+   135  0000                     # 616 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   136                           FSR1H_SHAD equ 0388Ch ;# 
+   137  0000                     # 636 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   138                           FSR2SH equ 0388Dh ;# 
+   139  0000                     # 643 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   140                           FSR2L_SHAD equ 0388Dh ;# 
+   141  0000                     # 663 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   142                           FSR2H_SHAD equ 0388Eh ;# 
+   143  0000                     # 683 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   144                           PRODSH equ 0388Fh ;# 
+   145  0000                     # 690 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   146                           PRODL_SHAD equ 0388Fh ;# 
+   147  0000                     # 710 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   148                           PRODH_SHAD equ 03890h ;# 
+   149  0000                     # 730 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   150                           IVTADL equ 0389Dh ;# 
+   151  0000                     # 750 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   152                           IVTADH equ 0389Eh ;# 
+   153  0000                     # 770 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   154                           IVTADU equ 0389Fh ;# 
+   155  0000                     # 790 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   156                           WDTCON0 equ 0395Bh ;# 
+   157  0000                     # 865 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   158                           WDTCON1 equ 0395Ch ;# 
+   159  0000                     # 959 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   160                           WDTPSL equ 0395Dh ;# 
+   161  0000                     # 1087 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   162                           WDTPSH equ 0395Eh ;# 
+   163  0000                     # 1215 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   164                           WDTTMR equ 0395Fh ;# 
+   165  0000                     # 1303 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   166                           CRCDATA equ 03960h ;# 
+   167  0000                     # 1310 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   168                           CRCDATL equ 03960h ;# 
+   169  0000                     # 1372 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   170                           CRCDATH equ 03961h ;# 
+   171  0000                     # 1434 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   172                           CRCACC equ 03962h ;# 
+   173  0000                     # 1441 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   174                           CRCACCL equ 03962h ;# 
+   175  0000                     # 1503 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   176                           CRCACCH equ 03963h ;# 
+   177  0000                     # 1565 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   178                           CRCSHFT equ 03964h ;# 
+   179  0000                     # 1572 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   180                           CRCSHIFTL equ 03964h ;# 
+   181  0000                     # 1634 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   182                           CRCSHIFTH equ 03965h ;# 
+   183  0000                     # 1696 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   184                           CRCXOR equ 03966h ;# 
+   185  0000                     # 1703 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   186                           CRCXORL equ 03966h ;# 
+   187  0000                     # 1760 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   188                           CRCXORH equ 03967h ;# 
+   189  0000                     # 1822 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   190                           CRCCON0 equ 03968h ;# 
+   191  0000                     # 1882 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   192                           CRCCON1 equ 03969h ;# 
+   193  0000                     # 1960 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   194                           SCANLADR equ 03976h ;# 
+   195  0000                     # 1967 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   196                           SCANLADRL equ 03976h ;# 
+   197  0000                     # 2095 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   198                           SCANLADRH equ 03977h ;# 
+   199  0000                     # 2223 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   200                           SCANLADRU equ 03978h ;# 
+   201  0000                     # 2329 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   202                           SCANHADR equ 03979h ;# 
+   203  0000                     # 2336 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   204                           SCANHADRL equ 03979h ;# 
+   205  0000                     # 2464 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   206                           SCANHADRH equ 0397Ah ;# 
+   207  0000                     # 2592 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   208                           SCANHADRU equ 0397Bh ;# 
+   209  0000                     # 2696 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   210                           SCANCON0 equ 0397Ch ;# 
+   211  0000                     # 2747 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   212                           SCANTRIG equ 0397Dh ;# 
+   213  0000                     # 2767 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   214                           IPR0 equ 03980h ;# 
+   215  0000                     # 2829 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   216                           IPR1 equ 03981h ;# 
+   217  0000                     # 2913 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   218                           IPR2 equ 03982h ;# 
+   219  0000                     # 2984 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   220                           IPR3 equ 03983h ;# 
+   221  0000                     # 3062 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   222                           IPR4 equ 03984h ;# 
+   223  0000                     # 3127 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   224                           IPR5 equ 03985h ;# 
+   225  0000                     # 3216 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   226                           IPR6 equ 03986h ;# 
+   227  0000                     # 3278 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   228                           IPR7 equ 03987h ;# 
+   229  0000                     # 3323 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   230                           IPR8 equ 03988h ;# 
+   231  0000                     # 3350 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   232                           IPR9 equ 03989h ;# 
+   233  0000                     # 3388 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   234                           IPR10 equ 0398Ah ;# 
+   235  0000                     # 3414 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   236                           PIE0 equ 03990h ;# 
+   237  0000                     # 3476 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   238                           PIE1 equ 03991h ;# 
+   239  0000                     # 3569 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   240                           PIE2 equ 03992h ;# 
+   241  0000                     # 3640 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   242                           PIE3 equ 03993h ;# 
+   243  0000                     # 3750 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   244                           PIE4 equ 03994h ;# 
+   245  0000                     # 3807 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   246                           PIE5 equ 03995h ;# 
+   247  0000                     # 3869 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   248                           PIE6 equ 03996h ;# 
+   249  0000                     # 3931 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   250                           PIE7 equ 03997h ;# 
+   251  0000                     # 3976 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   252                           PIE8 equ 03998h ;# 
+   253  0000                     # 4003 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   254                           PIE9 equ 03999h ;# 
+   255  0000                     # 4041 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   256                           PIE10 equ 0399Ah ;# 
+   257  0000                     # 4067 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   258                           PIR0 equ 039A0h ;# 
+   259  0000                     # 4129 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   260                           PIR1 equ 039A1h ;# 
+   261  0000                     # 4222 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   262                           PIR2 equ 039A2h ;# 
+   263  0000                     # 4293 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   264                           PIR3 equ 039A3h ;# 
+   265  0000                     # 4371 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   266                           PIR4 equ 039A4h ;# 
+   267  0000                     # 4428 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   268                           PIR5 equ 039A5h ;# 
+   269  0000                     # 4490 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   270                           PIR6 equ 039A6h ;# 
+   271  0000                     # 4552 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   272                           PIR7 equ 039A7h ;# 
+   273  0000                     # 4597 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   274                           PIR8 equ 039A8h ;# 
+   275  0000                     # 4624 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   276                           PIR9 equ 039A9h ;# 
+   277  0000                     # 4662 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   278                           PIR10 equ 039AAh ;# 
+   279  0000                     # 4688 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   280                           PMD0 equ 039C0h ;# 
+   281  0000                     # 4765 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   282                           PMD1 equ 039C1h ;# 
+   283  0000                     # 4835 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   284                           PMD2 equ 039C2h ;# 
+   285  0000                     # 4880 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   286                           PMD3 equ 039C3h ;# 
+   287  0000                     # 4942 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   288                           PMD4 equ 039C4h ;# 
+   289  0000                     # 4975 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   290                           PMD5 equ 039C5h ;# 
+   291  0000                     # 5020 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   292                           PMD6 equ 039C6h ;# 
+   293  0000                     # 5070 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   294                           PMD7 equ 039C7h ;# 
+   295  0000                     # 5096 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   296                           BORCON equ 039D0h ;# 
+   297  0000                     # 5123 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   298                           VREGCON equ 039D1h ;# 
+   299  0000                     # 5144 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   300                           CPUDOZE equ 039D8h ;# 
+   301  0000                     # 5209 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   302                           OSCCON1 equ 039D9h ;# 
+   303  0000                     # 5279 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   304                           OSCCON2 equ 039DAh ;# 
+   305  0000                     # 5349 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   306                           OSCCON3 equ 039DBh ;# 
+   307  0000                     # 5389 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   308                           OSCSTAT equ 039DCh ;# 
+   309  0000                     # 5394 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   310                           OSCSTAT1 equ 039DCh ;# 
+   311  0000                     # 5501 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   312                           OSCEN equ 039DDh ;# 
+   313  0000                     # 5552 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   314                           OSCTUNE equ 039DEh ;# 
+   315  0000                     # 5656 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   316                           OSCFRQ equ 039DFh ;# 
+   317  0000                     # 5736 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   318                           NVMADRL equ 039E0h ;# 
+   319  0000                     # 5864 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   320                           NVMADRH equ 039E1h ;# 
+   321  0000                     # 5920 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   322                           NVMDAT equ 039E3h ;# 
+   323  0000                     # 6048 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   324                           NVMCON1 equ 039E5h ;# 
+   325  0000                     # 6138 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   326                           NVMCON2 equ 039E6h ;# 
+   327  0000                     # 6158 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   328                           PRLOCK equ 039EFh ;# 
+   329  0000                     # 6178 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   330                           ISRPR equ 039F1h ;# 
+   331  0000                     # 6246 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   332                           MAINPR equ 039F2h ;# 
+   333  0000                     # 6314 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   334                           DMA1PR equ 039F3h ;# 
+   335  0000                     # 6382 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   336                           DMA2PR equ 039F4h ;# 
+   337  0000                     # 6450 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   338                           SCANPR equ 039F7h ;# 
+   339  0000                     # 6518 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   340                           RA0PPS equ 03A00h ;# 
+   341  0000                     # 6568 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   342                           RA1PPS equ 03A01h ;# 
+   343  0000                     # 6618 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   344                           RA2PPS equ 03A02h ;# 
+   345  0000                     # 6668 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   346                           RA3PPS equ 03A03h ;# 
+   347  0000                     # 6718 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   348                           RA4PPS equ 03A04h ;# 
+   349  0000                     # 6768 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   350                           RA5PPS equ 03A05h ;# 
+   351  0000                     # 6818 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   352                           RA6PPS equ 03A06h ;# 
+   353  0000                     # 6868 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   354                           RA7PPS equ 03A07h ;# 
+   355  0000                     # 6918 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   356                           RB0PPS equ 03A08h ;# 
+   357  0000                     # 6968 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   358                           RB1PPS equ 03A09h ;# 
+   359  0000                     # 7018 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   360                           RB2PPS equ 03A0Ah ;# 
+   361  0000                     # 7068 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   362                           RB3PPS equ 03A0Bh ;# 
+   363  0000                     # 7118 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   364                           RB4PPS equ 03A0Ch ;# 
+   365  0000                     # 7168 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   366                           RB5PPS equ 03A0Dh ;# 
+   367  0000                     # 7218 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   368                           RB6PPS equ 03A0Eh ;# 
+   369  0000                     # 7268 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   370                           RB7PPS equ 03A0Fh ;# 
+   371  0000                     # 7318 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   372                           RC0PPS equ 03A10h ;# 
+   373  0000                     # 7368 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   374                           RC1PPS equ 03A11h ;# 
+   375  0000                     # 7418 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   376                           RC2PPS equ 03A12h ;# 
+   377  0000                     # 7468 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   378                           RC3PPS equ 03A13h ;# 
+   379  0000                     # 7518 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   380                           RC4PPS equ 03A14h ;# 
+   381  0000                     # 7568 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   382                           RC5PPS equ 03A15h ;# 
+   383  0000                     # 7618 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   384                           RC6PPS equ 03A16h ;# 
+   385  0000                     # 7668 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   386                           RC7PPS equ 03A17h ;# 
+   387  0000                     # 7718 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   388                           RD0PPS equ 03A18h ;# 
+   389  0000                     # 7768 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   390                           RD1PPS equ 03A19h ;# 
+   391  0000                     # 7818 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   392                           RD2PPS equ 03A1Ah ;# 
+   393  0000                     # 7868 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   394                           RD3PPS equ 03A1Bh ;# 
+   395  0000                     # 7918 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   396                           RD4PPS equ 03A1Ch ;# 
+   397  0000                     # 7968 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   398                           RD5PPS equ 03A1Dh ;# 
+   399  0000                     # 8018 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   400                           RD6PPS equ 03A1Eh ;# 
+   401  0000                     # 8068 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   402                           RD7PPS equ 03A1Fh ;# 
+   403  0000                     # 8118 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   404                           RE0PPS equ 03A20h ;# 
+   405  0000                     # 8168 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   406                           RE1PPS equ 03A21h ;# 
+   407  0000                     # 8218 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   408                           RE2PPS equ 03A22h ;# 
+   409  0000                     # 8268 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   410                           ANSELA equ 03A40h ;# 
+   411  0000                     # 8330 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   412                           WPUA equ 03A41h ;# 
+   413  0000                     # 8392 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   414                           ODCONA equ 03A42h ;# 
+   415  0000                     # 8454 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   416                           SLRCONA equ 03A43h ;# 
+   417  0000                     # 8516 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   418                           INLVLA equ 03A44h ;# 
+   419  0000                     # 8578 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   420                           IOCAP equ 03A45h ;# 
+   421  0000                     # 8640 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   422                           IOCAN equ 03A46h ;# 
+   423  0000                     # 8702 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   424                           IOCAF equ 03A47h ;# 
+   425  0000                     # 8764 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   426                           CCDPA equ 03A48h ;# 
+   427  0000                     # 8826 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   428                           CCDNA equ 03A49h ;# 
+   429  0000                     # 8888 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   430                           ANSELB equ 03A50h ;# 
+   431  0000                     # 8950 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   432                           WPUB equ 03A51h ;# 
+   433  0000                     # 9012 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   434                           ODCONB equ 03A52h ;# 
+   435  0000                     # 9074 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   436                           SLRCONB equ 03A53h ;# 
+   437  0000                     # 9136 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   438                           INLVLB equ 03A54h ;# 
+   439  0000                     # 9198 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   440                           IOCBP equ 03A55h ;# 
+   441  0000                     # 9260 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   442                           IOCBN equ 03A56h ;# 
+   443  0000                     # 9322 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   444                           IOCBF equ 03A57h ;# 
+   445  0000                     # 9384 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   446                           CCDPB equ 03A58h ;# 
+   447  0000                     # 9446 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   448                           CCDNB equ 03A59h ;# 
+   449  0000                     # 9508 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   450                           RB1I2C equ 03A5Ah ;# 
+   451  0000                     # 9616 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   452                           RB2I2C equ 03A5Bh ;# 
+   453  0000                     # 9724 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   454                           ANSELC equ 03A60h ;# 
+   455  0000                     # 9786 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   456                           WPUC equ 03A61h ;# 
+   457  0000                     # 9848 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   458                           ODCONC equ 03A62h ;# 
+   459  0000                     # 9910 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   460                           SLRCONC equ 03A63h ;# 
+   461  0000                     # 9972 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   462                           INLVLC equ 03A64h ;# 
+   463  0000                     # 10034 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   464                           IOCCP equ 03A65h ;# 
+   465  0000                     # 10096 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   466                           IOCCN equ 03A66h ;# 
+   467  0000                     # 10158 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   468                           IOCCF equ 03A67h ;# 
+   469  0000                     # 10220 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   470                           CCDPC equ 03A68h ;# 
+   471  0000                     # 10282 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   472                           CCDNC equ 03A69h ;# 
+   473  0000                     # 10344 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   474                           RC3I2C equ 03A6Ah ;# 
+   475  0000                     # 10452 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   476                           RC4I2C equ 03A6Bh ;# 
+   477  0000                     # 10560 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   478                           ANSELD equ 03A70h ;# 
+   479  0000                     # 10622 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   480                           WPUD equ 03A71h ;# 
+   481  0000                     # 10684 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   482                           ODCOND equ 03A72h ;# 
+   483  0000                     # 10746 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   484                           SLRCOND equ 03A73h ;# 
+   485  0000                     # 10808 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   486                           INLVLD equ 03A74h ;# 
+   487  0000                     # 10870 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   488                           CCDPD equ 03A78h ;# 
+   489  0000                     # 10932 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   490                           CCDND equ 03A79h ;# 
+   491  0000                     # 10994 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   492                           RD0I2C equ 03A7Ah ;# 
+   493  0000                     # 11102 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   494                           RD1I2C equ 03A7Bh ;# 
+   495  0000                     # 11210 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   496                           ANSELE equ 03A80h ;# 
+   497  0000                     # 11242 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   498                           WPUE equ 03A81h ;# 
+   499  0000                     # 11280 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   500                           ODCONE equ 03A82h ;# 
+   501  0000                     # 11312 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   502                           SLRCONE equ 03A83h ;# 
+   503  0000                     # 11344 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   504                           INLVLE equ 03A84h ;# 
+   505  0000                     # 11382 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   506                           IOCEP equ 03A85h ;# 
+   507  0000                     # 11403 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   508                           IOCEN equ 03A86h ;# 
+   509  0000                     # 11424 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   510                           IOCEF equ 03A87h ;# 
+   511  0000                     # 11445 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   512                           CCDPE equ 03A88h ;# 
+   513  0000                     # 11477 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   514                           CCDNE equ 03A89h ;# 
+   515  0000                     # 11509 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   516                           CCDCON equ 03ABEh ;# 
+   517  0000                     # 11565 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   518                           PPSLOCK equ 03ABFh ;# 
+   519  0000                     # 11585 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   520                           INT0PPS equ 03AC0h ;# 
+   521  0000                     # 11605 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   522                           INT1PPS equ 03AC1h ;# 
+   523  0000                     # 11625 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   524                           INT2PPS equ 03AC2h ;# 
+   525  0000                     # 11645 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   526                           T0CKIPPS equ 03AC3h ;# 
+   527  0000                     # 11665 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   528                           T1CKIPPS equ 03AC4h ;# 
+   529  0000                     # 11685 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   530                           T1GPPS equ 03AC5h ;# 
+   531  0000                     # 11705 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   532                           T3CKIPPS equ 03AC6h ;# 
+   533  0000                     # 11725 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   534                           T3GPPS equ 03AC7h ;# 
+   535  0000                     # 11745 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   536                           T5CKIPPS equ 03AC8h ;# 
+   537  0000                     # 11765 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   538                           T5GPPS equ 03AC9h ;# 
+   539  0000                     # 11785 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   540                           T2INPPS equ 03ACAh ;# 
+   541  0000                     # 11805 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   542                           T4INPPS equ 03ACBh ;# 
+   543  0000                     # 11825 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   544                           T6INPPS equ 03ACCh ;# 
+   545  0000                     # 11845 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   546                           CCP1PPS equ 03ACDh ;# 
+   547  0000                     # 11865 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   548                           CCP2PPS equ 03ACEh ;# 
+   549  0000                     # 11885 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   550                           CCP3PPS equ 03ACFh ;# 
+   551  0000                     # 11905 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   552                           CCP4PPS equ 03AD0h ;# 
+   553  0000                     # 11925 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   554                           SMT1WINPPS equ 03AD1h ;# 
+   555  0000                     # 11945 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   556                           SMT1SIGPPS equ 03AD2h ;# 
+   557  0000                     # 11965 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   558                           CWG1INPPS equ 03AD3h ;# 
+   559  0000                     # 11985 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   560                           CWG2INPPS equ 03AD4h ;# 
+   561  0000                     # 12005 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   562                           CWG3INPPS equ 03AD5h ;# 
+   563  0000                     # 12025 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   564                           MD1CARLPPS equ 03AD6h ;# 
+   565  0000                     # 12045 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   566                           MD1CARHPPS equ 03AD7h ;# 
+   567  0000                     # 12065 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   568                           MD1SRCPPS equ 03AD8h ;# 
+   569  0000                     # 12085 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   570                           CLCIN0PPS equ 03AD9h ;# 
+   571  0000                     # 12105 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   572                           CLCIN1PPS equ 03ADAh ;# 
+   573  0000                     # 12125 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   574                           CLCIN2PPS equ 03ADBh ;# 
+   575  0000                     # 12145 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   576                           CLCIN3PPS equ 03ADCh ;# 
+   577  0000                     # 12165 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   578                           ADACTPPS equ 03ADDh ;# 
+   579  0000                     # 12185 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   580                           SPI1SCKPPS equ 03ADEh ;# 
+   581  0000                     # 12205 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   582                           SPI1SDIPPS equ 03ADFh ;# 
+   583  0000                     # 12225 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   584                           SPI1SSPPS equ 03AE0h ;# 
+   585  0000                     # 12245 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   586                           I2C1SCLPPS equ 03AE1h ;# 
+   587  0000                     # 12265 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   588                           I2C1SDAPPS equ 03AE2h ;# 
+   589  0000                     # 12285 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   590                           I2C2SCLPPS equ 03AE3h ;# 
+   591  0000                     # 12305 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   592                           I2C2SDAPPS equ 03AE4h ;# 
+   593  0000                     # 12325 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   594                           U1RXPPS equ 03AE5h ;# 
+   595  0000                     # 12345 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   596                           U1CTSPPS equ 03AE6h ;# 
+   597  0000                     # 12365 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   598                           U2RXPPS equ 03AE8h ;# 
+   599  0000                     # 12385 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   600                           U2CTSPPS equ 03AE9h ;# 
+   601  0000                     # 12405 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   602                           DMA2BUF equ 03BC9h ;# 
+   603  0000                     # 12533 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   604                           DMA2DCNT equ 03BCAh ;# 
+   605  0000                     # 12540 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   606                           DMA2DCNTL equ 03BCAh ;# 
+   607  0000                     # 12668 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   608                           DMA2DCNTH equ 03BCBh ;# 
+   609  0000                     # 12748 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   610                           DMA2DPTR equ 03BCCh ;# 
+   611  0000                     # 12755 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   612                           DMA2DPTRL equ 03BCCh ;# 
+   613  0000                     # 12883 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   614                           DMA2DPTRH equ 03BCDh ;# 
+   615  0000                     # 13011 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   616                           DMA2DSZ equ 03BCEh ;# 
+   617  0000                     # 13018 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   618                           DMA2DSZL equ 03BCEh ;# 
+   619  0000                     # 13146 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   620                           DMA2DSZH equ 03BCFh ;# 
+   621  0000                     # 13226 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   622                           DMA2DSA equ 03BD0h ;# 
+   623  0000                     # 13233 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   624                           DMA2DSAL equ 03BD0h ;# 
+   625  0000                     # 13361 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   626                           DMA2DSAH equ 03BD1h ;# 
+   627  0000                     # 13489 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   628                           DMA2SCNT equ 03BD2h ;# 
+   629  0000                     # 13496 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   630                           DMA2SCNTL equ 03BD2h ;# 
+   631  0000                     # 13624 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   632                           DMA2SCNTH equ 03BD3h ;# 
+   633  0000                     # 13706 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   634                           DMA2SPTR equ 03BD4h ;# 
+   635  0000                     # 13713 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   636                           DMA2SPTRL equ 03BD4h ;# 
+   637  0000                     # 13841 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   638                           DMA2SPTRH equ 03BD5h ;# 
+   639  0000                     # 13969 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   640                           DMA2SPTRU equ 03BD6h ;# 
+   641  0000                     # 14073 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   642                           DMA2SSZ equ 03BD7h ;# 
+   643  0000                     # 14080 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   644                           DMA2SSZL equ 03BD7h ;# 
+   645  0000                     # 14208 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   646                           DMA2SSZH equ 03BD8h ;# 
+   647  0000                     # 14290 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   648                           DMA2SSA equ 03BD9h ;# 
+   649  0000                     # 14297 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   650                           DMA2SSAL equ 03BD9h ;# 
+   651  0000                     # 14425 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   652                           DMA2SSAH equ 03BDAh ;# 
+   653  0000                     # 14553 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   654                           DMA2SSAU equ 03BDBh ;# 
+   655  0000                     # 14657 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   656                           DMA2CON0 equ 03BDCh ;# 
+   657  0000                     # 14737 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   658                           DMA2CON1 equ 03BDDh ;# 
+   659  0000                     # 14781 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   660                           DMA2AIRQ equ 03BDEh ;# 
+   661  0000                     # 14897 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   662                           DMA2SIRQ equ 03BDFh ;# 
+   663  0000                     # 15013 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   664                           DMA1BUF equ 03BE9h ;# 
+   665  0000                     # 15141 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   666                           DMA1DCNT equ 03BEAh ;# 
+   667  0000                     # 15148 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   668                           DMA1DCNTL equ 03BEAh ;# 
+   669  0000                     # 15276 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   670                           DMA1DCNTH equ 03BEBh ;# 
+   671  0000                     # 15356 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   672                           DMA1DPTR equ 03BECh ;# 
+   673  0000                     # 15363 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   674                           DMA1DPTRL equ 03BECh ;# 
+   675  0000                     # 15491 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   676                           DMA1DPTRH equ 03BEDh ;# 
+   677  0000                     # 15619 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   678                           DMA1DSZ equ 03BEEh ;# 
+   679  0000                     # 15626 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   680                           DMA1DSZL equ 03BEEh ;# 
+   681  0000                     # 15754 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   682                           DMA1DSZH equ 03BEFh ;# 
+   683  0000                     # 15834 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   684                           DMA1DSA equ 03BF0h ;# 
+   685  0000                     # 15841 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   686                           DMA1DSAL equ 03BF0h ;# 
+   687  0000                     # 15969 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   688                           DMA1DSAH equ 03BF1h ;# 
+   689  0000                     # 16097 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   690                           DMA1SCNT equ 03BF2h ;# 
+   691  0000                     # 16104 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   692                           DMA1SCNTL equ 03BF2h ;# 
+   693  0000                     # 16232 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   694                           DMA1SCNTH equ 03BF3h ;# 
+   695  0000                     # 16314 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   696                           DMA1SPTR equ 03BF4h ;# 
+   697  0000                     # 16321 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   698                           DMA1SPTRL equ 03BF4h ;# 
+   699  0000                     # 16449 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   700                           DMA1SPTRH equ 03BF5h ;# 
+   701  0000                     # 16577 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   702                           DMA1SPTRU equ 03BF6h ;# 
+   703  0000                     # 16681 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   704                           DMA1SSZ equ 03BF7h ;# 
+   705  0000                     # 16688 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   706                           DMA1SSZL equ 03BF7h ;# 
+   707  0000                     # 16816 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   708                           DMA1SSZH equ 03BF8h ;# 
+   709  0000                     # 16898 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   710                           DMA1SSA equ 03BF9h ;# 
+   711  0000                     # 16905 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   712                           DMA1SSAL equ 03BF9h ;# 
+   713  0000                     # 17033 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   714                           DMA1SSAH equ 03BFAh ;# 
+   715  0000                     # 17161 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   716                           DMA1SSAU equ 03BFBh ;# 
+   717  0000                     # 17265 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   718                           DMA1CON0 equ 03BFCh ;# 
+   719  0000                     # 17345 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   720                           DMA1CON1 equ 03BFDh ;# 
+   721  0000                     # 17389 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   722                           DMA1AIRQ equ 03BFEh ;# 
+   723  0000                     # 17505 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   724                           DMA1SIRQ equ 03BFFh ;# 
+   725  0000                     # 17621 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   726                           CLC4CON equ 03C56h ;# 
+   727  0000                     # 17749 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   728                           CLC4POL equ 03C57h ;# 
+   729  0000                     # 17827 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   730                           CLC4SEL0 equ 03C58h ;# 
+   731  0000                     # 17955 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   732                           CLC4SEL1 equ 03C59h ;# 
+   733  0000                     # 18083 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   734                           CLC4SEL2 equ 03C5Ah ;# 
+   735  0000                     # 18211 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   736                           CLC4SEL3 equ 03C5Bh ;# 
+   737  0000                     # 18339 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   738                           CLC4GLS0 equ 03C5Ch ;# 
+   739  0000                     # 18451 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   740                           CLC4GLS1 equ 03C5Dh ;# 
+   741  0000                     # 18563 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   742                           CLC4GLS2 equ 03C5Eh ;# 
+   743  0000                     # 18675 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   744                           CLC4GLS3 equ 03C5Fh ;# 
+   745  0000                     # 18787 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   746                           CLC3CON equ 03C60h ;# 
+   747  0000                     # 18915 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   748                           CLC3POL equ 03C61h ;# 
+   749  0000                     # 18993 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   750                           CLC3SEL0 equ 03C62h ;# 
+   751  0000                     # 19121 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   752                           CLC3SEL1 equ 03C63h ;# 
+   753  0000                     # 19249 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   754                           CLC3SEL2 equ 03C64h ;# 
+   755  0000                     # 19377 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   756                           CLC3SEL3 equ 03C65h ;# 
+   757  0000                     # 19505 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   758                           CLC3GLS0 equ 03C66h ;# 
+   759  0000                     # 19617 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   760                           CLC3GLS1 equ 03C67h ;# 
+   761  0000                     # 19729 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   762                           CLC3GLS2 equ 03C68h ;# 
+   763  0000                     # 19841 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   764                           CLC3GLS3 equ 03C69h ;# 
+   765  0000                     # 19953 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   766                           CLC2CON equ 03C6Ah ;# 
+   767  0000                     # 20081 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   768                           CLC2POL equ 03C6Bh ;# 
+   769  0000                     # 20159 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   770                           CLC2SEL0 equ 03C6Ch ;# 
+   771  0000                     # 20287 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   772                           CLC2SEL1 equ 03C6Dh ;# 
+   773  0000                     # 20415 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   774                           CLC2SEL2 equ 03C6Eh ;# 
+   775  0000                     # 20543 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   776                           CLC2SEL3 equ 03C6Fh ;# 
+   777  0000                     # 20671 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   778                           CLC2GLS0 equ 03C70h ;# 
+   779  0000                     # 20783 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   780                           CLC2GLS1 equ 03C71h ;# 
+   781  0000                     # 20895 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   782                           CLC2GLS2 equ 03C72h ;# 
+   783  0000                     # 21007 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   784                           CLC2GLS3 equ 03C73h ;# 
+   785  0000                     # 21119 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   786                           CLC1CON equ 03C74h ;# 
+   787  0000                     # 21247 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   788                           CLC1POL equ 03C75h ;# 
+   789  0000                     # 21325 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   790                           CLC1SEL0 equ 03C76h ;# 
+   791  0000                     # 21453 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   792                           CLC1SEL1 equ 03C77h ;# 
+   793  0000                     # 21581 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   794                           CLC1SEL2 equ 03C78h ;# 
+   795  0000                     # 21709 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   796                           CLC1SEL3 equ 03C79h ;# 
+   797  0000                     # 21837 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   798                           CLC1GLS0 equ 03C7Ah ;# 
+   799  0000                     # 21949 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   800                           CLC1GLS1 equ 03C7Bh ;# 
+   801  0000                     # 22061 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   802                           CLC1GLS2 equ 03C7Ch ;# 
+   803  0000                     # 22173 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   804                           CLC1GLS3 equ 03C7Dh ;# 
+   805  0000                     # 22285 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   806                           CLCDATA0 equ 03C7Eh ;# 
+   807  0000                     # 22323 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   808                           CLKRCON equ 03CE5h ;# 
+   809  0000                     # 22409 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   810                           CLKRCLK equ 03CE6h ;# 
+   811  0000                     # 22489 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   812                           MD1CON0 equ 03CFAh ;# 
+   813  0000                     # 22557 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   814                           MD1CON1 equ 03CFBh ;# 
+   815  0000                     # 22623 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   816                           MD1SRC equ 03CFCh ;# 
+   817  0000                     # 22715 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   818                           MD1CARL equ 03CFDh ;# 
+   819  0000                     # 22807 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   820                           MD1CARH equ 03CFEh ;# 
+   821  0000                     # 22899 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   822                           SPI1RXB equ 03D10h ;# 
+   823  0000                     # 22969 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   824                           SPI1TXB equ 03D11h ;# 
+   825  0000                     # 23039 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   826                           SPI1TCNT equ 03D12h ;# 
+   827  0000                     # 23046 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   828                           SPI1TCNTL equ 03D12h ;# 
+   829  0000                     # 23066 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   830                           SPI1TCNTH equ 03D13h ;# 
+   831  0000                     # 23086 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   832                           SPI1CON0 equ 03D14h ;# 
+   833  0000                     # 23152 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   834                           SPI1CON1 equ 03D15h ;# 
+   835  0000                     # 23254 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   836                           SPI1CON2 equ 03D16h ;# 
+   837  0000                     # 23332 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   838                           SPI1STATUS equ 03D17h ;# 
+   839  0000                     # 23414 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   840                           SPI1TWIDTH equ 03D18h ;# 
+   841  0000                     # 23454 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   842                           SPI1BAUD equ 03D19h ;# 
+   843  0000                     # 23524 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   844                           SPI1INTF equ 03D1Ah ;# 
+   845  0000                     # 23616 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   846                           SPI1INTE equ 03D1Bh ;# 
+   847  0000                     # 23708 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   848                           SPI1CLK equ 03D1Ch ;# 
+   849  0000                     # 23776 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   850                           I2C2RXB equ 03D54h ;# 
+   851  0000                     # 23796 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   852                           I2C2TXB equ 03D55h ;# 
+   853  0000                     # 23816 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   854                           I2C2CNT equ 03D56h ;# 
+   855  0000                     # 23886 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   856                           I2C2ADB0 equ 03D57h ;# 
+   857  0000                     # 23906 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   858                           I2C2ADB1 equ 03D58h ;# 
+   859  0000                     # 23926 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   860                           I2C2ADR0 equ 03D59h ;# 
+   861  0000                     # 23946 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   862                           I2C2ADR1 equ 03D5Ah ;# 
+   863  0000                     # 23967 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   864                           I2C2ADR2 equ 03D5Bh ;# 
+   865  0000                     # 23987 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   866                           I2C2ADR3 equ 03D5Ch ;# 
+   867  0000                     # 24008 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   868                           I2C2CON0 equ 03D5Dh ;# 
+   869  0000                     # 24085 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   870                           I2C2CON1 equ 03D5Eh ;# 
+   871  0000                     # 24142 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   872                           I2C2CON2 equ 03D5Fh ;# 
+   873  0000                     # 24218 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   874                           I2C2ERR equ 03D60h ;# 
+   875  0000                     # 24308 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   876                           I2C2STAT0 equ 03D61h ;# 
+   877  0000                     # 24398 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   878                           I2C2STAT1 equ 03D62h ;# 
+   879  0000                     # 24445 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   880                           I2C2PIR equ 03D63h ;# 
+   881  0000                     # 24547 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   882                           I2C2PIE equ 03D64h ;# 
+   883  0000                     # 24649 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   884                           I2C2CLK equ 03D65h ;# 
+   885  0000                     # 24729 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   886                           I2C2BTO equ 03D66h ;# 
+   887  0000                     # 24797 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   888                           I2C1RXB equ 03D6Ah ;# 
+   889  0000                     # 24817 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   890                           I2C1TXB equ 03D6Bh ;# 
+   891  0000                     # 24837 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   892                           I2C1CNT equ 03D6Ch ;# 
+   893  0000                     # 24907 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   894                           I2C1ADB0 equ 03D6Dh ;# 
+   895  0000                     # 24927 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   896                           I2C1ADB1 equ 03D6Eh ;# 
+   897  0000                     # 24947 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   898                           I2C1ADR0 equ 03D6Fh ;# 
+   899  0000                     # 24967 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   900                           I2C1ADR1 equ 03D70h ;# 
+   901  0000                     # 24988 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   902                           I2C1ADR2 equ 03D71h ;# 
+   903  0000                     # 25008 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   904                           I2C1ADR3 equ 03D72h ;# 
+   905  0000                     # 25029 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   906                           I2C1CON0 equ 03D73h ;# 
+   907  0000                     # 25106 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   908                           I2C1CON1 equ 03D74h ;# 
+   909  0000                     # 25163 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   910                           I2C1CON2 equ 03D75h ;# 
+   911  0000                     # 25239 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   912                           I2C1ERR equ 03D76h ;# 
+   913  0000                     # 25329 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   914                           I2C1STAT0 equ 03D77h ;# 
+   915  0000                     # 25419 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   916                           I2C1STAT1 equ 03D78h ;# 
+   917  0000                     # 25466 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   918                           I2C1PIR equ 03D79h ;# 
+   919  0000                     # 25568 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   920                           I2C1PIE equ 03D7Ah ;# 
+   921  0000                     # 25670 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   922                           I2C1CLK equ 03D7Bh ;# 
+   923  0000                     # 25750 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   924                           I2C1BTO equ 03D7Ch ;# 
+   925  0000                     # 25818 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   926                           U2RXB equ 03DD0h ;# 
+   927  0000                     # 25823 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   928                           U2RXBL equ 03DD0h ;# 
+   929  0000                     # 25856 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   930                           U2TXB equ 03DD2h ;# 
+   931  0000                     # 25861 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   932                           U2TXBL equ 03DD2h ;# 
+   933  0000                     # 25894 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   934                           U2P1 equ 03DD4h ;# 
+   935  0000                     # 25901 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   936                           U2P1L equ 03DD4h ;# 
+   937  0000                     # 25921 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   938                           U2P2 equ 03DD6h ;# 
+   939  0000                     # 25928 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   940                           U2P2L equ 03DD6h ;# 
+   941  0000                     # 25948 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   942                           U2P3 equ 03DD8h ;# 
+   943  0000                     # 25955 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   944                           U2P3L equ 03DD8h ;# 
+   945  0000                     # 25975 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   946                           U2CON0 equ 03DDAh ;# 
+   947  0000                     # 26091 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   948                           U2CON1 equ 03DDBh ;# 
+   949  0000                     # 26171 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   950                           U2CON2 equ 03DDCh ;# 
+   951  0000                     # 26303 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   952                           U2BRG equ 03DDDh ;# 
+   953  0000                     # 26310 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   954                           U2BRGL equ 03DDDh ;# 
+   955  0000                     # 26330 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   956                           U2BRGH equ 03DDEh ;# 
+   957  0000                     # 26350 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   958                           U2FIFO equ 03DDFh ;# 
+   959  0000                     # 26480 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   960                           U2UIR equ 03DE0h ;# 
+   961  0000                     # 26536 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   962                           U2ERRIR equ 03DE1h ;# 
+   963  0000                     # 26648 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   964                           U2ERRIE equ 03DE2h ;# 
+   965  0000                     # 26760 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   966                           U1RXB equ 03DE8h ;# 
+   967  0000                     # 26765 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   968                           U1RXBL equ 03DE8h ;# 
+   969  0000                     # 26798 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   970                           U1RXCHK equ 03DE9h ;# 
+   971  0000                     # 26818 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   972                           U1TXB equ 03DEAh ;# 
+   973  0000                     # 26823 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   974                           U1TXBL equ 03DEAh ;# 
+   975  0000                     # 26856 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   976                           U1TXCHK equ 03DEBh ;# 
+   977  0000                     # 26876 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   978                           U1P1 equ 03DECh ;# 
+   979  0000                     # 26883 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   980                           U1P1L equ 03DECh ;# 
+   981  0000                     # 26903 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   982                           U1P1H equ 03DEDh ;# 
+   983  0000                     # 26923 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   984                           U1P2 equ 03DEEh ;# 
+   985  0000                     # 26930 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   986                           U1P2L equ 03DEEh ;# 
+   987  0000                     # 26950 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   988                           U1P2H equ 03DEFh ;# 
+   989  0000                     # 26970 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   990                           U1P3 equ 03DF0h ;# 
+   991  0000                     # 26977 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   992                           U1P3L equ 03DF0h ;# 
+   993  0000                     # 26997 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   994                           U1P3H equ 03DF1h ;# 
+   995  0000                     # 27017 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   996                           U1CON0 equ 03DF2h ;# 
+   997  0000                     # 27133 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+   998                           U1CON1 equ 03DF3h ;# 
+   999  0000                     # 27213 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1000                           U1CON2 equ 03DF4h ;# 
+  1001  0000                     # 27355 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1002                           U1BRG equ 03DF5h ;# 
+  1003  0000                     # 27362 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1004                           U1BRGL equ 03DF5h ;# 
+  1005  0000                     # 27382 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1006                           U1BRGH equ 03DF6h ;# 
+  1007  0000                     # 27402 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1008                           U1FIFO equ 03DF7h ;# 
+  1009  0000                     # 27532 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1010                           U1UIR equ 03DF8h ;# 
+  1011  0000                     # 27588 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1012                           U1ERRIR equ 03DF9h ;# 
+  1013  0000                     # 27700 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1014                           U1ERRIE equ 03DFAh ;# 
+  1015  0000                     # 27812 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1016                           DAC1CON1 equ 03E9Ch ;# 
+  1017  0000                     # 27872 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1018                           DAC1CON0 equ 03E9Eh ;# 
+  1019  0000                     # 27973 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1020                           CM2CON0 equ 03EB8h ;# 
+  1021  0000                     # 28053 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1022                           CM2CON1 equ 03EB9h ;# 
+  1023  0000                     # 28093 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1024                           CM2NCH equ 03EBAh ;# 
+  1025  0000                     # 28153 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1026                           CM2PCH equ 03EBBh ;# 
+  1027  0000                     # 28213 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1028                           CM1CON0 equ 03EBCh ;# 
+  1029  0000                     # 28293 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1030                           CM1CON1 equ 03EBDh ;# 
+  1031  0000                     # 28333 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1032                           CM1NCH equ 03EBEh ;# 
+  1033  0000                     # 28393 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1034                           CM1PCH equ 03EBFh ;# 
+  1035  0000                     # 28453 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1036                           CMOUT equ 03EC0h ;# 
+  1037  0000                     # 28479 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1038                           FVRCON equ 03EC1h ;# 
+  1039  0000                     # 28568 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1040                           ZCDCON equ 03EC3h ;# 
+  1041  0000                     # 28648 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1042                           HLVDCON0 equ 03EC9h ;# 
+  1043  0000                     # 28728 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1044                           HLVDCON1 equ 03ECAh ;# 
+  1045  0000                     # 28800 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1046                           ADCP equ 03ED7h ;# 
+  1047  0000                     # 28851 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1048                           ADLTH equ 03EDEh ;# 
+  1049  0000                     # 28858 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1050                           ADLTHL equ 03EDEh ;# 
+  1051  0000                     # 28986 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1052                           ADLTHH equ 03EDFh ;# 
+  1053  0000                     # 29114 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1054                           ADUTH equ 03EE0h ;# 
+  1055  0000                     # 29121 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1056                           ADUTHL equ 03EE0h ;# 
+  1057  0000                     # 29249 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1058                           ADUTHH equ 03EE1h ;# 
+  1059  0000                     # 29377 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1060                           ADERR equ 03EE2h ;# 
+  1061  0000                     # 29384 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1062                           ADERRL equ 03EE2h ;# 
+  1063  0000                     # 29512 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1064                           ADERRH equ 03EE3h ;# 
+  1065  0000                     # 29640 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1066                           ADSTPT equ 03EE4h ;# 
+  1067  0000                     # 29647 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1068                           ADSTPTL equ 03EE4h ;# 
+  1069  0000                     # 29775 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1070                           ADSTPTH equ 03EE5h ;# 
+  1071  0000                     # 29903 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1072                           ADFLTR equ 03EE6h ;# 
+  1073  0000                     # 29910 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1074                           ADFLTRL equ 03EE6h ;# 
+  1075  0000                     # 30038 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1076                           ADFLTRH equ 03EE7h ;# 
+  1077  0000                     # 30168 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1078                           ADACC equ 03EE8h ;# 
+  1079  0000                     # 30175 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1080                           ADACCL equ 03EE8h ;# 
+  1081  0000                     # 30303 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1082                           ADACCH equ 03EE9h ;# 
+  1083  0000                     # 30431 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1084                           ADACCU equ 03EEAh ;# 
+  1085  0000                     # 30559 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1086                           ADCNT equ 03EEBh ;# 
+  1087  0000                     # 30687 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1088                           ADRPT equ 03EECh ;# 
+  1089  0000                     # 30815 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1090                           ADPREV equ 03EEDh ;# 
+  1091  0000                     # 30822 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1092                           ADPREVL equ 03EEDh ;# 
+  1093  0000                     # 30950 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1094                           ADPREVH equ 03EEEh ;# 
+  1095  0000                     # 31078 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1096                           ADRES equ 03EEFh ;# 
+  1097  0000                     # 31085 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1098                           ADRESL equ 03EEFh ;# 
+  1099  0000                     # 31213 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1100                           ADRESH equ 03EF0h ;# 
+  1101  0000                     # 31333 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1102                           ADPCH equ 03EF1h ;# 
+  1103  0000                     # 31391 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1104                           ADACQ equ 03EF3h ;# 
+  1105  0000                     # 31398 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1106                           ADACQL equ 03EF3h ;# 
+  1107  0000                     # 31526 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1108                           ADACQH equ 03EF4h ;# 
+  1109  0000                     # 31618 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1110                           ADCAP equ 03EF5h ;# 
+  1111  0000                     # 31670 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1112                           ADPRE equ 03EF6h ;# 
+  1113  0000                     # 31677 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1114                           ADPREL equ 03EF6h ;# 
+  1115  0000                     # 31805 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1116                           ADPREH equ 03EF7h ;# 
+  1117  0000                     # 31897 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1118                           ADCON0 equ 03EF8h ;# 
+  1119  0000                     # 32024 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1120                           ADCON1 equ 03EF9h ;# 
+  1121  0000                     # 32099 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1122                           ADCON2 equ 03EFAh ;# 
+  1123  0000                     # 32277 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1124                           ADCON3 equ 03EFBh ;# 
+  1125  0000                     # 32407 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1126                           ADSTAT equ 03EFCh ;# 
+  1127  0000                     # 32532 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1128                           ADREF equ 03EFDh ;# 
+  1129  0000                     # 32614 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1130                           ADACT equ 03EFEh ;# 
+  1131  0000                     # 32706 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1132                           ADCLK equ 03EFFh ;# 
+  1133  0000                     # 32812 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1134                           SMT1TMR equ 03F12h ;# 
+  1135  0000                     # 32819 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1136                           SMT1TMRL equ 03F12h ;# 
+  1137  0000                     # 32947 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1138                           SMT1TMRH equ 03F13h ;# 
+  1139  0000                     # 33075 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1140                           SMT1TMRU equ 03F14h ;# 
+  1141  0000                     # 33205 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1142                           SMT1CPR equ 03F15h ;# 
+  1143  0000                     # 33212 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1144                           SMT1CPRL equ 03F15h ;# 
+  1145  0000                     # 33340 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1146                           SMT1CPRH equ 03F16h ;# 
+  1147  0000                     # 33468 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1148                           SMT1CPRU equ 03F17h ;# 
+  1149  0000                     # 33598 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1150                           SMT1CPW equ 03F18h ;# 
+  1151  0000                     # 33605 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1152                           SMT1CPWL equ 03F18h ;# 
+  1153  0000                     # 33733 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1154                           SMT1CPWH equ 03F19h ;# 
+  1155  0000                     # 33861 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1156                           SMT1CPWU equ 03F1Ah ;# 
+  1157  0000                     # 33991 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1158                           SMT1PR equ 03F1Bh ;# 
+  1159  0000                     # 33998 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1160                           SMT1PRL equ 03F1Bh ;# 
+  1161  0000                     # 34126 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1162                           SMT1PRH equ 03F1Ch ;# 
+  1163  0000                     # 34254 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1164                           SMT1PRU equ 03F1Dh ;# 
+  1165  0000                     # 34382 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1166                           SMT1CON0 equ 03F1Eh ;# 
+  1167  0000                     # 34500 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1168                           SMT1CON1 equ 03F1Fh ;# 
+  1169  0000                     # 34580 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1170                           SMT1STAT equ 03F20h ;# 
+  1171  0000                     # 34679 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1172                           SMT1CLK equ 03F21h ;# 
+  1173  0000                     # 34747 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1174                           SMT1SIG equ 03F22h ;# 
+  1175  0000                     # 34839 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1176                           SMT1WIN equ 03F23h ;# 
+  1177  0000                     # 34933 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1178                           NCO1ACC equ 03F38h ;# 
+  1179  0000                     # 34940 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1180                           NCO1ACCL equ 03F38h ;# 
+  1181  0000                     # 35068 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1182                           NCO1ACCH equ 03F39h ;# 
+  1183  0000                     # 35196 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1184                           NCO1ACCU equ 03F3Ah ;# 
+  1185  0000                     # 35326 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1186                           NCO1INC equ 03F3Bh ;# 
+  1187  0000                     # 35333 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1188                           NCO1INCL equ 03F3Bh ;# 
+  1189  0000                     # 35461 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1190                           NCO1INCH equ 03F3Ch ;# 
+  1191  0000                     # 35589 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1192                           NCO1INCU equ 03F3Dh ;# 
+  1193  0000                     # 35717 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1194                           NCO1CON equ 03F3Eh ;# 
+  1195  0000                     # 35785 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1196                           NCO1CLK equ 03F3Fh ;# 
+  1197  0000                     # 35917 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1198                           CWG3CLK equ 03F40h ;# 
+  1199  0000                     # 35922 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1200                           CWG3CLKCON equ 03F40h ;# 
+  1201  0000                     # 35971 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1202                           CWG3ISM equ 03F41h ;# 
+  1203  0000                     # 36017 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1204                           CWG3DBR equ 03F42h ;# 
+  1205  0000                     # 36121 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1206                           CWG3DBF equ 03F43h ;# 
+  1207  0000                     # 36225 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1208                           CWG3CON0 equ 03F44h ;# 
+  1209  0000                     # 36326 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1210                           CWG3CON1 equ 03F45h ;# 
+  1211  0000                     # 36404 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1212                           CWG3AS0 equ 03F46h ;# 
+  1213  0000                     # 36524 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1214                           CWG3AS1 equ 03F47h ;# 
+  1215  0000                     # 36580 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1216                           CWG3STR equ 03F48h ;# 
+  1217  0000                     # 36692 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1218                           CWG2CLK equ 03F49h ;# 
+  1219  0000                     # 36697 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1220                           CWG2CLKCON equ 03F49h ;# 
+  1221  0000                     # 36746 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1222                           CWG2ISM equ 03F4Ah ;# 
+  1223  0000                     # 36792 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1224                           CWG2DBR equ 03F4Bh ;# 
+  1225  0000                     # 36896 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1226                           CWG2DBF equ 03F4Ch ;# 
+  1227  0000                     # 37000 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1228                           CWG2CON0 equ 03F4Dh ;# 
+  1229  0000                     # 37101 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1230                           CWG2CON1 equ 03F4Eh ;# 
+  1231  0000                     # 37179 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1232                           CWG2AS0 equ 03F4Fh ;# 
+  1233  0000                     # 37299 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1234                           CWG2AS1 equ 03F50h ;# 
+  1235  0000                     # 37355 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1236                           CWG2STR equ 03F51h ;# 
+  1237  0000                     # 37467 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1238                           CWG1CLK equ 03F52h ;# 
+  1239  0000                     # 37472 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1240                           CWG1CLKCON equ 03F52h ;# 
+  1241  0000                     # 37521 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1242                           CWG1ISM equ 03F53h ;# 
+  1243  0000                     # 37567 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1244                           CWG1DBR equ 03F54h ;# 
+  1245  0000                     # 37671 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1246                           CWG1DBF equ 03F55h ;# 
+  1247  0000                     # 37775 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1248                           CWG1CON0 equ 03F56h ;# 
+  1249  0000                     # 37876 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1250                           CWG1CON1 equ 03F57h ;# 
+  1251  0000                     # 37954 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1252                           CWG1AS0 equ 03F58h ;# 
+  1253  0000                     # 38074 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1254                           CWG1AS1 equ 03F59h ;# 
+  1255  0000                     # 38130 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1256                           CWG1STR equ 03F5Ah ;# 
+  1257  0000                     # 38242 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1258                           CCPTMRS0 equ 03F5Eh ;# 
+  1259  0000                     # 38330 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1260                           CCPTMRS1 equ 03F5Fh ;# 
+  1261  0000                     # 38418 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1262                           PWM8DC equ 03F60h ;# 
+  1263  0000                     # 38425 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1264                           PWM8DCL equ 03F60h ;# 
+  1265  0000                     # 38491 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1266                           PWM8DCH equ 03F61h ;# 
+  1267  0000                     # 38661 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1268                           PWM8CON equ 03F62h ;# 
+  1269  0000                     # 38717 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1270                           PWM7DC equ 03F64h ;# 
+  1271  0000                     # 38724 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1272                           PWM7DCL equ 03F64h ;# 
+  1273  0000                     # 38790 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1274                           PWM7DCH equ 03F65h ;# 
+  1275  0000                     # 38960 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1276                           PWM7CON equ 03F66h ;# 
+  1277  0000                     # 39016 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1278                           PWM6DC equ 03F68h ;# 
+  1279  0000                     # 39023 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1280                           PWM6DCL equ 03F68h ;# 
+  1281  0000                     # 39089 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1282                           PWM6DCH equ 03F69h ;# 
+  1283  0000                     # 39259 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1284                           PWM6CON equ 03F6Ah ;# 
+  1285  0000                     # 39315 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1286                           PWM5DC equ 03F6Ch ;# 
+  1287  0000                     # 39322 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1288                           PWM5DCL equ 03F6Ch ;# 
+  1289  0000                     # 39388 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1290                           PWM5DCH equ 03F6Dh ;# 
+  1291  0000                     # 39558 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1292                           PWM5CON equ 03F6Eh ;# 
+  1293  0000                     # 39614 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1294                           CCPR4 equ 03F70h ;# 
+  1295  0000                     # 39621 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1296                           CCPR4L equ 03F70h ;# 
+  1297  0000                     # 39641 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1298                           CCPR4H equ 03F71h ;# 
+  1299  0000                     # 39661 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1300                           CCP4CON equ 03F72h ;# 
+  1301  0000                     # 39788 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1302                           CCP4CAP equ 03F73h ;# 
+  1303  0000                     # 39856 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1304                           CCPR3 equ 03F74h ;# 
+  1305  0000                     # 39863 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1306                           CCPR3L equ 03F74h ;# 
+  1307  0000                     # 39883 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1308                           CCPR3H equ 03F75h ;# 
+  1309  0000                     # 39903 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1310                           CCP3CON equ 03F76h ;# 
+  1311  0000                     # 40030 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1312                           CCP3CAP equ 03F77h ;# 
+  1313  0000                     # 40098 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1314                           CCPR2 equ 03F78h ;# 
+  1315  0000                     # 40105 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1316                           CCPR2L equ 03F78h ;# 
+  1317  0000                     # 40125 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1318                           CCPR2H equ 03F79h ;# 
+  1319  0000                     # 40145 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1320                           CCP2CON equ 03F7Ah ;# 
+  1321  0000                     # 40272 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1322                           CCP2CAP equ 03F7Bh ;# 
+  1323  0000                     # 40340 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1324                           CCPR1 equ 03F7Ch ;# 
+  1325  0000                     # 40347 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1326                           CCPR1L equ 03F7Ch ;# 
+  1327  0000                     # 40367 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1328                           CCPR1H equ 03F7Dh ;# 
+  1329  0000                     # 40387 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1330                           CCP1CON equ 03F7Eh ;# 
+  1331  0000                     # 40514 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1332                           CCP1CAP equ 03F7Fh ;# 
+  1333  0000                     # 40582 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1334                           T6TMR equ 03F92h ;# 
+  1335  0000                     # 40587 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1336                           TMR6 equ 03F92h ;# 
+  1337  0000                     # 40620 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1338                           T6PR equ 03F93h ;# 
+  1339  0000                     # 40625 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1340                           PR6 equ 03F93h ;# 
+  1341  0000                     # 40658 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1342                           T6CON equ 03F94h ;# 
+  1343  0000                     # 40804 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1344                           T6HLT equ 03F95h ;# 
+  1345  0000                     # 40932 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1346                           T6CLKCON equ 03F96h ;# 
+  1347  0000                     # 40937 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1348                           T6CLK equ 03F96h ;# 
+  1349  0000                     # 41090 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1350                           T6RST equ 03F97h ;# 
+  1351  0000                     # 41182 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1352                           TMR5L equ 03F98h ;# 
+  1353  0000                     # 41252 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1354                           TMR5H equ 03F99h ;# 
+  1355  0000                     # 41322 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1356                           T5CON equ 03F9Ah ;# 
+  1357  0000                     # 41327 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1358                           TMR5CON equ 03F9Ah ;# 
+  1359  0000                     # 41512 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1360                           T5GCON equ 03F9Bh ;# 
+  1361  0000                     # 41517 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1362                           TMR5GCON equ 03F9Bh ;# 
+  1363  0000                     # 41726 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1364                           T5GATE equ 03F9Ch ;# 
+  1365  0000                     # 41731 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1366                           TMR5GATE equ 03F9Ch ;# 
+  1367  0000                     # 41892 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1368                           T5CLK equ 03F9Dh ;# 
+  1369  0000                     # 41897 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1370                           TMR5CLK equ 03F9Dh ;# 
+  1371  0000                     # 42058 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1372                           T4TMR equ 03F9Eh ;# 
+  1373  0000                     # 42063 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1374                           TMR4 equ 03F9Eh ;# 
+  1375  0000                     # 42096 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1376                           T4PR equ 03F9Fh ;# 
+  1377  0000                     # 42101 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1378                           PR4 equ 03F9Fh ;# 
+  1379  0000                     # 42134 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1380                           T4CON equ 03FA0h ;# 
+  1381  0000                     # 42280 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1382                           T4HLT equ 03FA1h ;# 
+  1383  0000                     # 42408 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1384                           T4CLKCON equ 03FA2h ;# 
+  1385  0000                     # 42413 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1386                           T4CLK equ 03FA2h ;# 
+  1387  0000                     # 42566 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1388                           T4RST equ 03FA3h ;# 
+  1389  0000                     # 42658 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1390                           TMR3L equ 03FA4h ;# 
+  1391  0000                     # 42728 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1392                           TMR3H equ 03FA5h ;# 
+  1393  0000                     # 42798 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1394                           T3CON equ 03FA6h ;# 
+  1395  0000                     # 42803 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1396                           TMR3CON equ 03FA6h ;# 
+  1397  0000                     # 42988 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1398                           T3GCON equ 03FA7h ;# 
+  1399  0000                     # 42993 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1400                           TMR3GCON equ 03FA7h ;# 
+  1401  0000                     # 43202 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1402                           T3GATE equ 03FA8h ;# 
+  1403  0000                     # 43207 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1404                           TMR3GATE equ 03FA8h ;# 
+  1405  0000                     # 43368 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1406                           T3CLK equ 03FA9h ;# 
+  1407  0000                     # 43373 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1408                           TMR3CLK equ 03FA9h ;# 
+  1409  0000                     # 43534 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1410                           T2TMR equ 03FAAh ;# 
+  1411  0000                     # 43539 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1412                           TMR2 equ 03FAAh ;# 
+  1413  0000                     # 43572 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1414                           T2PR equ 03FABh ;# 
+  1415  0000                     # 43577 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1416                           PR2 equ 03FABh ;# 
+  1417  0000                     # 43610 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1418                           T2CON equ 03FACh ;# 
+  1419  0000                     # 43756 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1420                           T2HLT equ 03FADh ;# 
+  1421  0000                     # 43884 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1422                           T2CLKCON equ 03FAEh ;# 
+  1423  0000                     # 43889 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1424                           T2CLK equ 03FAEh ;# 
+  1425  0000                     # 44042 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1426                           T2RST equ 03FAFh ;# 
+  1427  0000                     # 44134 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1428                           TMR1L equ 03FB0h ;# 
+  1429  0000                     # 44204 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1430                           TMR1H equ 03FB1h ;# 
+  1431  0000                     # 44274 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1432                           T1CON equ 03FB2h ;# 
+  1433  0000                     # 44279 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1434                           TMR1CON equ 03FB2h ;# 
+  1435  0000                     # 44464 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1436                           T1GCON equ 03FB3h ;# 
+  1437  0000                     # 44469 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1438                           TMR1GCON equ 03FB3h ;# 
+  1439  0000                     # 44678 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1440                           T1GATE equ 03FB4h ;# 
+  1441  0000                     # 44683 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1442                           TMR1GATE equ 03FB4h ;# 
+  1443  0000                     # 44844 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1444                           T1CLK equ 03FB5h ;# 
+  1445  0000                     # 44849 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1446                           TMR1CLK equ 03FB5h ;# 
+  1447  0000                     # 45010 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1448                           TMR0L equ 03FB6h ;# 
+  1449  0000                     # 45015 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1450                           TMR0 equ 03FB6h ;# 
+  1451  0000                     # 45148 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1452                           TMR0H equ 03FB7h ;# 
+  1453  0000                     # 45153 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1454                           PR0 equ 03FB7h ;# 
+  1455  0000                     # 45402 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1456                           T0CON0 equ 03FB8h ;# 
+  1457  0000                     # 45500 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1458                           T0CON1 equ 03FB9h ;# 
+  1459  0000                     # 45642 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1460                           LATA equ 03FBAh ;# 
+  1461  0000                     # 45754 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1462                           LATB equ 03FBBh ;# 
+  1463  0000                     # 45866 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1464                           LATC equ 03FBCh ;# 
+  1465  0000                     # 45978 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1466                           LATD equ 03FBDh ;# 
+  1467  0000                     # 46090 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1468                           LATE equ 03FBEh ;# 
+  1469  0000                     # 46142 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1470                           TRISA equ 03FC2h ;# 
+  1471  0000                     # 46204 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1472                           TRISB equ 03FC3h ;# 
+  1473  0000                     # 46266 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1474                           TRISC equ 03FC4h ;# 
+  1475  0000                     # 46328 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1476                           TRISD equ 03FC5h ;# 
+  1477  0000                     # 46390 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1478                           TRISE equ 03FC6h ;# 
+  1479  0000                     # 46422 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1480                           PORTA equ 03FCAh ;# 
+  1481  0000                     # 46506 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1482                           PORTB equ 03FCBh ;# 
+  1483  0000                     # 46577 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1484                           PORTC equ 03FCCh ;# 
+  1485  0000                     # 46663 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1486                           PORTD equ 03FCDh ;# 
+  1487  0000                     # 46734 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1488                           PORTE equ 03FCEh ;# 
+  1489  0000                     # 46851 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1490                           INTCON0 equ 03FD2h ;# 
+  1491  0000                     # 46911 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1492                           INTCON1 equ 03FD3h ;# 
+  1493  0000                     # 46947 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1494                           IVTLOCK equ 03FD4h ;# 
+  1495  0000                     # 46969 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1496                           IVTBASE equ 03FD5h ;# 
+  1497  0000                     # 46976 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1498                           IVTBASEL equ 03FD5h ;# 
+  1499  0000                     # 47038 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1500                           IVTBASEH equ 03FD6h ;# 
+  1501  0000                     # 47100 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1502                           IVTBASEU equ 03FD7h ;# 
+  1503  0000                     # 47144 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1504                           STATUS equ 03FD8h ;# 
+  1505  0000                     # 47260 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1506                           FSR2 equ 03FD9h ;# 
+  1507  0000                     # 47267 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1508                           FSR2L equ 03FD9h ;# 
+  1509  0000                     # 47287 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1510                           FSR2H equ 03FDAh ;# 
+  1511  0000                     # 47307 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1512                           PLUSW2 equ 03FDBh ;# 
+  1513  0000                     # 47327 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1514                           PREINC2 equ 03FDCh ;# 
+  1515  0000                     # 47347 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1516                           POSTDEC2 equ 03FDDh ;# 
+  1517  0000                     # 47367 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1518                           POSTINC2 equ 03FDEh ;# 
+  1519  0000                     # 47387 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1520                           INDF2 equ 03FDFh ;# 
+  1521  0000                     # 47407 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1522                           BSR equ 03FE0h ;# 
+  1523  0000                     # 47427 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1524                           FSR1 equ 03FE1h ;# 
+  1525  0000                     # 47434 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1526                           FSR1L equ 03FE1h ;# 
+  1527  0000                     # 47454 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1528                           FSR1H equ 03FE2h ;# 
+  1529  0000                     # 47474 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1530                           PLUSW1 equ 03FE3h ;# 
+  1531  0000                     # 47494 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1532                           PREINC1 equ 03FE4h ;# 
+  1533  0000                     # 47514 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1534                           POSTDEC1 equ 03FE5h ;# 
+  1535  0000                     # 47534 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1536                           POSTINC1 equ 03FE6h ;# 
+  1537  0000                     # 47554 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1538                           INDF1 equ 03FE7h ;# 
+  1539  0000                     # 47574 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1540                           WREG equ 03FE8h ;# 
+  1541  0000                     # 47612 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1542                           FSR0 equ 03FE9h ;# 
+  1543  0000                     # 47619 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1544                           FSR0L equ 03FE9h ;# 
+  1545  0000                     # 47639 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1546                           FSR0H equ 03FEAh ;# 
+  1547  0000                     # 47659 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1548                           PLUSW0 equ 03FEBh ;# 
+  1549  0000                     # 47679 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1550                           PREINC0 equ 03FECh ;# 
+  1551  0000                     # 47699 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1552                           POSTDEC0 equ 03FEDh ;# 
+  1553  0000                     # 47719 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1554                           POSTINC0 equ 03FEEh ;# 
+  1555  0000                     # 47739 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1556                           INDF0 equ 03FEFh ;# 
+  1557  0000                     # 47759 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1558                           PCON0 equ 03FF0h ;# 
+  1559  0000                     # 47912 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1560                           PCON1 equ 03FF1h ;# 
+  1561  0000                     # 47951 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1562                           PROD equ 03FF3h ;# 
+  1563  0000                     # 47958 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1564                           PRODL equ 03FF3h ;# 
+  1565  0000                     # 47978 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1566                           PRODH equ 03FF4h ;# 
+  1567  0000                     # 47998 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1568                           TABLAT equ 03FF5h ;# 
+  1569  0000                     # 48020 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1570                           TBLPTR equ 03FF6h ;# 
+  1571  0000                     # 48027 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1572                           TBLPTRL equ 03FF6h ;# 
+  1573  0000                     # 48047 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1574                           TBLPTRH equ 03FF7h ;# 
+  1575  0000                     # 48067 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1576                           TBLPTRU equ 03FF8h ;# 
+  1577  0000                     # 48098 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1578                           PCLAT equ 03FF9h ;# 
+  1579  0000                     # 48105 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1580                           PCL equ 03FF9h ;# 
+  1581  0000                     # 48125 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1582                           PCLATH equ 03FFAh ;# 
+  1583  0000                     # 48145 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1584                           PCLATU equ 03FFBh ;# 
+  1585  0000                     # 48165 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1586                           STKPTR equ 03FFCh ;# 
+  1587  0000                     # 48251 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1588                           TOS equ 03FFDh ;# 
+  1589  0000                     # 48258 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1590                           TOSL equ 03FFDh ;# 
+  1591  0000                     # 48278 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1592                           TOSH equ 03FFEh ;# 
+  1593  0000                     # 48298 "C:\Program Files (x86)\Microchip\xc8\v2.00\pic\include\pic18f46k42.h"
+  1594                           TOSU equ 03FFFh ;# 
+  1595  0000                     	FNROOT	_main
+  1596                           	global	main@F15993
+  1597                           psect	idataCOMRAM,class=CODE,space=0,delta=1,noexec
+  1598                           global __pidataCOMRAM
+  1599                           __pidataCOMRAM:
+  1600  00FF3C                     	file	"Binary_CounterLED.c"
+  1601                           	line	22
+  1602                           
+  1603                           ;initializer for main@F15993
+  1604                           	db	low(0)
+  1605  00FF3C  00                 	db	low(01h)
+  1606  00FF3D  01                 	db	low(02h)
+  1607  00FF3E  02                 	db	low(03h)
+  1608  00FF3F  03                 	db	low(04h)
+  1609  00FF40  04                 	db	low(05h)
+  1610  00FF41  05                 	db	low(06h)
+  1611  00FF42  06                 	db	low(07h)
+  1612  00FF43  07                 	db	low(08h)
+  1613  00FF44  08                 	db	low(09h)
+  1614  00FF45  09                 	db	low(0Ah)
+  1615  00FF46  0A                 	db	low(0Bh)
+  1616  00FF47  0B                 	db	low(0Ch)
+  1617  00FF48  0C                 	db	low(0Dh)
+  1618  00FF49  0D                 	db	low(0Eh)
+  1619  00FF4A  0E                 	db	low(0Fh)
+  1620  00FF4B  0F                 	global	_ANSELCbits
+  1621                           _ANSELCbits	set	0x3A60
+  1622  0000                     	global	_ANSELB
+  1623                           _ANSELB	set	0x3A50
+  1624  0000                     	global	_PORTB
+  1625                           _PORTB	set	0x3FCB
+  1626  0000                     	global	_TRISCbits
+  1627                           _TRISCbits	set	0x3FC4
+  1628  0000                     	global	_TRISB
+  1629                           _TRISB	set	0x3FC3
+  1630  0000                     ; #config settings
+  1631                           global __CFG_FEXTOSC$HS
+  1632                           __CFG_FEXTOSC$HS equ 0x0
+  1633  0000                     global __CFG_RSTOSC$EXTOSC
+  1634                           __CFG_RSTOSC$EXTOSC equ 0x0
+  1635  0000                     global __CFG_CLKOUTEN$OFF
+  1636                           __CFG_CLKOUTEN$OFF equ 0x0
+  1637  0000                     global __CFG_PR1WAY$ON
+  1638                           __CFG_PR1WAY$ON equ 0x0
+  1639  0000                     global __CFG_CSWEN$ON
+  1640                           __CFG_CSWEN$ON equ 0x0
+  1641  0000                     global __CFG_FCMEN$OFF
+  1642                           __CFG_FCMEN$OFF equ 0x0
+  1643  0000                     global __CFG_MCLRE$EXTMCLR
+  1644                           __CFG_MCLRE$EXTMCLR equ 0x0
+  1645  0000                     global __CFG_PWRTS$PWRT_OFF
+  1646                           __CFG_PWRTS$PWRT_OFF equ 0x0
+  1647  0000                     global __CFG_MVECEN$OFF
+  1648                           __CFG_MVECEN$OFF equ 0x0
+  1649  0000                     global __CFG_IVT1WAY$ON
+  1650                           __CFG_IVT1WAY$ON equ 0x0
+  1651  0000                     global __CFG_LPBOREN$OFF
+  1652                           __CFG_LPBOREN$OFF equ 0x0
+  1653  0000                     global __CFG_BOREN$SBORDIS
+  1654                           __CFG_BOREN$SBORDIS equ 0x0
+  1655  0000                     global __CFG_BORV$VBOR_2P45
+  1656                           __CFG_BORV$VBOR_2P45 equ 0x0
+  1657  0000                     global __CFG_ZCD$OFF
+  1658                           __CFG_ZCD$OFF equ 0x0
+  1659  0000                     global __CFG_PPS1WAY$ON
+  1660                           __CFG_PPS1WAY$ON equ 0x0
+  1661  0000                     global __CFG_STVREN$ON
+  1662                           __CFG_STVREN$ON equ 0x0
+  1663  0000                     global __CFG_DEBUG$OFF
+  1664                           __CFG_DEBUG$OFF equ 0x0
+  1665  0000                     global __CFG_XINST$OFF
+  1666                           __CFG_XINST$OFF equ 0x0
+  1667  0000                     global __CFG_WDTCPS$WDTCPS_31
+  1668                           __CFG_WDTCPS$WDTCPS_31 equ 0x0
+  1669  0000                     global __CFG_WDTE$OFF
+  1670                           __CFG_WDTE$OFF equ 0x0
+  1671  0000                     global __CFG_WDTCWS$WDTCWS_7
+  1672                           __CFG_WDTCWS$WDTCWS_7 equ 0x0
+  1673  0000                     global __CFG_WDTCCS$SC
+  1674                           __CFG_WDTCCS$SC equ 0x0
+  1675  0000                     global __CFG_BBSIZE$BBSIZE_512
+  1676                           __CFG_BBSIZE$BBSIZE_512 equ 0x0
+  1677  0000                     global __CFG_BBEN$OFF
+  1678                           __CFG_BBEN$OFF equ 0x0
+  1679  0000                     global __CFG_SAFEN$OFF
+  1680                           __CFG_SAFEN$OFF equ 0x0
+  1681  0000                     global __CFG_WRTAPP$OFF
+  1682                           __CFG_WRTAPP$OFF equ 0x0
+  1683  0000                     global __CFG_WRTB$OFF
+  1684                           __CFG_WRTB$OFF equ 0x0
+  1685  0000                     global __CFG_WRTC$OFF
+  1686                           __CFG_WRTC$OFF equ 0x0
+  1687  0000                     global __CFG_WRTD$OFF
+  1688                           __CFG_WRTD$OFF equ 0x0
+  1689  0000                     global __CFG_WRTSAF$OFF
+  1690                           __CFG_WRTSAF$OFF equ 0x0
+  1691  0000                     global __CFG_LVP$ON
+  1692                           __CFG_LVP$ON equ 0x0
+  1693  0000                     global __CFG_CP$OFF
+  1694                           __CFG_CP$OFF equ 0x0
+  1695  0000                     	file	"C:\Users\Teddy\AppData\Local\Temp\s4sk."
+  1696                           	line	#
+  1697                           psect	cinit,class=CODE,delta=1,reloc=2
+  1698                           global __pcinit
+  1699                           __pcinit:
+  1700  00FF4C                     global start_initialization
+  1701                           start_initialization:
+  1702  00FF4C                     
+  1703                           global __initialization
+  1704                           __initialization:
+  1705  00FF4C                     psect	dataCOMRAM,class=COMRAM,space=1,noexec
+  1706                           global __pdataCOMRAM
+  1707                           __pdataCOMRAM:
+  1708  000015                     	file	"Binary_CounterLED.c"
+  1709                           	line	22
+  1710                           main@F15993:
+  1711  000015                            ds      16
+  1712  000015                     	file	"C:\Users\Teddy\AppData\Local\Temp\s4sk."
+  1713                           	line	#
+  1714                           psect	cinit
+  1715                           ; Initialize objects allocated to COMRAM (16 bytes)
+  1716                           	global __pidataCOMRAM
+  1717                           	; load TBLPTR registers with __pidataCOMRAM
+  1718                           	movlw	low (__pidataCOMRAM)
+  1719  00FF4C  0E3C               	movwf	tblptrl
+  1720  00FF4E  6EF6               	movlw	high(__pidataCOMRAM)
+  1721  00FF50  0EFF               	movwf	tblptrh
+  1722  00FF52  6EF7               	movlw	low highword(__pidataCOMRAM)
+  1723  00FF54  0E00               	movwf	tblptru
+  1724  00FF56  6EF8               	lfsr	0,__pdataCOMRAM
+  1725  00FF58  EE00  F015         	lfsr	1,16
+  1726  00FF5C  EE10 F010          	copy_data0:
+  1727  00FF60                     	tblrd	*+
+  1728  00FF60  0009               	movff	tablat, postinc0
+  1729  00FF62  006F FFD7 FFEE     	movf	postdec1,w
+  1730  00FF68  50E5               	movf	fsr1l,w
+  1731  00FF6A  50E1               	bnz	copy_data0
+  1732  00FF6C  E1F9               psect cinit,class=CODE,delta=1
+  1733                           global end_of_initialization,__end_of__initialization
+  1734                           
+  1735                           ;End of C runtime variable initialization code
+  1736                           
+  1737                           end_of_initialization:
+  1738  00FF6E                     __end_of__initialization:
+  1739  00FF6E                     movlb 0
+  1740  00FF6E  0100               goto _main	;jump to C main() function
+  1741  00FF70  EFBA  F07F         psect	cstackCOMRAM,class=COMRAM,space=1,noexec
+  1742                           global __pcstackCOMRAM
+  1743                           __pcstackCOMRAM:
+  1744  000001                     ?_main:	; 1 bytes @ 0x0
+  1745  000001                     ??_main:	; 1 bytes @ 0x0
+  1746  000001                     	ds   2
+  1747  000001                     	global	main@COUNTER
+  1748                           main@COUNTER:	; 16 bytes @ 0x2
+  1749  000003                     	ds   16
+  1750  000003                     	global	main@Pattern
+  1751                           main@Pattern:	; 1 bytes @ 0x12
+  1752  000013                     	ds   1
+  1753  000013                     	global	main@num
+  1754                           main@num:	; 1 bytes @ 0x13
+  1755  000014                     	ds   1
+  1756  000014                     ;!
+  1757                           ;!Data Sizes:
+  1758                           ;!    Strings     0
+  1759                           ;!    Constant    0
+  1760                           ;!    Data        16
+  1761                           ;!    BSS         0
+  1762                           ;!    Persistent  0
+  1763                           ;!    Stack       0
+  1764                           ;!
+  1765                           ;!Auto Spaces:
+  1766                           ;!    Space          Size  Autos    Used
+  1767                           ;!    COMRAM           95     20      36
+  1768                           ;!    BANK0           160      0       0
+  1769                           ;!    BANK1           256      0       0
+  1770                           ;!    BANK2           256      0       0
+  1771                           ;!    BANK3           256      0       0
+  1772                           ;!    BANK4           256      0       0
+  1773                           ;!    BANK5           256      0       0
+  1774                           ;!    BANK6           256      0       0
+  1775                           ;!    BANK7           256      0       0
+  1776                           ;!    BANK8           256      0       0
+  1777                           ;!    BANK9           256      0       0
+  1778                           ;!    BANK10          256      0       0
+  1779                           ;!    BANK11          256      0       0
+  1780                           ;!    BANK12          256      0       0
+  1781                           ;!    BANK13          256      0       0
+  1782                           ;!    BANK14          256      0       0
+  1783                           ;!    BANK15          256      0       0
+  1784                           
+  1785                           ;!
+  1786                           ;!Pointer List with Targets:
+  1787                           ;!
+  1788                           ;!    None.
+  1789                           
+  1790                           
+  1791                           ;!
+  1792                           ;!Critical Paths under _main in COMRAM
+  1793                           ;!
+  1794                           ;!    None.
+  1795                           ;!
+  1796                           ;!Critical Paths under _main in BANK0
+  1797                           ;!
+  1798                           ;!    None.
+  1799                           ;!
+  1800                           ;!Critical Paths under _main in BANK1
+  1801                           ;!
+  1802                           ;!    None.
+  1803                           ;!
+  1804                           ;!Critical Paths under _main in BANK2
+  1805                           ;!
+  1806                           ;!    None.
+  1807                           ;!
+  1808                           ;!Critical Paths under _main in BANK3
+  1809                           ;!
+  1810                           ;!    None.
+  1811                           ;!
+  1812                           ;!Critical Paths under _main in BANK4
+  1813                           ;!
+  1814                           ;!    None.
+  1815                           ;!
+  1816                           ;!Critical Paths under _main in BANK5
+  1817                           ;!
+  1818                           ;!    None.
+  1819                           ;!
+  1820                           ;!Critical Paths under _main in BANK6
+  1821                           ;!
+  1822                           ;!    None.
+  1823                           ;!
+  1824                           ;!Critical Paths under _main in BANK7
+  1825                           ;!
+  1826                           ;!    None.
+  1827                           ;!
+  1828                           ;!Critical Paths under _main in BANK8
+  1829                           ;!
+  1830                           ;!    None.
+  1831                           ;!
+  1832                           ;!Critical Paths under _main in BANK9
+  1833                           ;!
+  1834                           ;!    None.
+  1835                           ;!
+  1836                           ;!Critical Paths under _main in BANK10
+  1837                           ;!
+  1838                           ;!    None.
+  1839                           ;!
+  1840                           ;!Critical Paths under _main in BANK11
+  1841                           ;!
+  1842                           ;!    None.
+  1843                           ;!
+  1844                           ;!Critical Paths under _main in BANK12
+  1845                           ;!
+  1846                           ;!    None.
+  1847                           ;!
+  1848                           ;!Critical Paths under _main in BANK13
+  1849                           ;!
+  1850                           ;!    None.
+  1851                           ;!
+  1852                           ;!Critical Paths under _main in BANK14
+  1853                           ;!
+  1854                           ;!    None.
+  1855                           ;!
+  1856                           ;!Critical Paths under _main in BANK15
+  1857                           ;!
+  1858                           ;!    None.
+  1859                           
+  1860 ;;
+  1861 ;;Main: autosize = 0, tempsize = 2, incstack = 0, save=0
+  1862 ;;
+  1863                           
+  1864                           ;!
+  1865                           ;!Call Graph Tables:
+  1866                           ;!
+  1867                           ;! ---------------------------------------------------------------------------------
+  1868                           ;! (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+  1869                           ;! ---------------------------------------------------------------------------------
+  1870                           ;! (0) _main                                                20    20      0      60
+  1871                           ;!                                              0 COMRAM    20    20      0
+  1872                           ;! ---------------------------------------------------------------------------------
+  1873                           ;! Estimated maximum stack depth 0
+  1874                           ;! ---------------------------------------------------------------------------------
+  1875                           ;!
+  1876                           ;! Call Graph Graphs:
+  1877                           ;!
+  1878                           ;! _main (ROOT)
+  1879                           ;!
+  1880                           
+  1881                           ;! Address spaces:
+  1882                           
+  1883                           ;!Name               Size   Autos  Total    Cost      Usage
+  1884                           ;!BIGRAM             FFF      0       0      37        0.0%
+  1885                           ;!EEDATA             400      0       0       0        0.0%
+  1886                           ;!BITBANK15          100      0       0      30        0.0%
+  1887                           ;!BANK15             100      0       0      31        0.0%
+  1888                           ;!BITBANK14          100      0       0      28        0.0%
+  1889                           ;!BANK14             100      0       0      29        0.0%
+  1890                           ;!BITBANK13          100      0       0      36        0.0%
+  1891                           ;!BANK13             100      0       0      27        0.0%
+  1892                           ;!BITBANK12          100      0       0      35        0.0%
+  1893                           ;!BANK12             100      0       0      26        0.0%
+  1894                           ;!BITBANK11          100      0       0      34        0.0%
+  1895                           ;!BANK11             100      0       0      25        0.0%
+  1896                           ;!BITBANK10          100      0       0      33        0.0%
+  1897                           ;!BANK10             100      0       0      24        0.0%
+  1898                           ;!BITBANK9           100      0       0      22        0.0%
+  1899                           ;!BANK9              100      0       0      23        0.0%
+  1900                           ;!BITBANK8           100      0       0      20        0.0%
+  1901                           ;!BANK8              100      0       0      21        0.0%
+  1902                           ;!BITBANK7           100      0       0      18        0.0%
+  1903                           ;!BANK7              100      0       0      19        0.0%
+  1904                           ;!BITBANK6           100      0       0      16        0.0%
+  1905                           ;!BANK6              100      0       0      17        0.0%
+  1906                           ;!BITBANK5           100      0       0      14        0.0%
+  1907                           ;!BANK5              100      0       0      15        0.0%
+  1908                           ;!BITBANK4           100      0       0      12        0.0%
+  1909                           ;!BANK4              100      0       0      13        0.0%
+  1910                           ;!BITBANK3           100      0       0      10        0.0%
+  1911                           ;!BANK3              100      0       0      11        0.0%
+  1912                           ;!BITBANK2           100      0       0       8        0.0%
+  1913                           ;!BANK2              100      0       0       9        0.0%
+  1914                           ;!BITBANK1           100      0       0       6        0.0%
+  1915                           ;!BANK1              100      0       0       7        0.0%
+  1916                           ;!BITBANK0            A0      0       0       4        0.0%
+  1917                           ;!BANK0               A0      0       0       5        0.0%
+  1918                           ;!BITCOMRAM           5F      0       0       0        0.0%
+  1919                           ;!COMRAM              5F     14      24       1       37.9%
+  1920                           ;!BITSFR_8             0      0       0     200        0.0%
+  1921                           ;!SFR_8                0      0       0     200        0.0%
+  1922                           ;!BITSFR_7             0      0       0     200        0.0%
+  1923                           ;!SFR_7                0      0       0     200        0.0%
+  1924                           ;!BITSFR_6             0      0       0     200        0.0%
+  1925                           ;!SFR_6                0      0       0     200        0.0%
+  1926                           ;!BITSFR_5             0      0       0     200        0.0%
+  1927                           ;!SFR_5                0      0       0     200        0.0%
+  1928                           ;!BITSFR_4             0      0       0     200        0.0%
+  1929                           ;!SFR_4                0      0       0     200        0.0%
+  1930                           ;!BITSFR_3             0      0       0     200        0.0%
+  1931                           ;!SFR_3                0      0       0     200        0.0%
+  1932                           ;!BITSFR_2             0      0       0     200        0.0%
+  1933                           ;!SFR_2                0      0       0     200        0.0%
+  1934                           ;!BITSFR_1             0      0       0     200        0.0%
+  1935                           ;!SFR_1                0      0       0     200        0.0%
+  1936                           ;!BITSFR               0      0       0     200        0.0%
+  1937                           ;!SFR                  0      0       0     200        0.0%
+  1938                           ;!STACK                0      0       0       2        0.0%
+  1939                           ;!NULL                 0      0       0       0        0.0%
+  1940                           ;!ABS                  0      0      24      32        0.0%
+  1941                           ;!DATA                 0      0      24       3        0.0%
+  1942                           ;!CODE                 0      0       0       0        0.0%
+  1943                           
+  1944                           	global	_main
+  1945                           
+  1946 ;; *************** function _main *****************
+  1947 ;; Defined at:
+  1948 ;;		line 20 in file "Binary_CounterLED.c"
+  1949 ;; Parameters:    Size  Location     Type
+  1950 ;;		None
+  1951 ;; Auto vars:     Size  Location     Type
+  1952 ;;  COUNTER        16    2[COMRAM] unsigned char [16]
+  1953 ;;  num             1   19[COMRAM] unsigned char 
+  1954 ;;  Pattern         1   18[COMRAM] unsigned char 
+  1955 ;; Return value:  Size  Location     Type
+  1956 ;;                  1    wreg      void 
+  1957 ;; Registers used:
+  1958 ;;		wreg, fsr1l, fsr1h, fsr2l, fsr2h, status,2, status,0, prodl, prodh
+  1959 ;; Tracked objects:
+  1960 ;;		On entry : 0/0
+  1961 ;;		On exit  : 0/0
+  1962 ;;		Unchanged: 0/0
+  1963 ;; Data sizes:     COMRAM   BANK0   BANK1   BANK2   BANK3   BANK4   BANK5   BANK6   BANK7   BANK8   BANK9  BANK10  BANK1
+       1  BANK12  BANK13  BANK14  BANK15
+  1964 ;;      Params:         0       0       0       0       0       0       0       0       0       0       0       0       
+       0       0       0       0       0
+  1965 ;;      Locals:        18       0       0       0       0       0       0       0       0       0       0       0       
+       0       0       0       0       0
+  1966 ;;      Temps:          2       0       0       0       0       0       0       0       0       0       0       0       
+       0       0       0       0       0
+  1967 ;;      Totals:        20       0       0       0       0       0       0       0       0       0       0       0       
+       0       0       0       0       0
+  1968 ;;Total ram usage:       20 bytes
+  1969 ;; This function calls:
+  1970 ;;		Nothing
+  1971 ;; This function is called by:
+  1972 ;;		Startup code after reset
+  1973 ;; This function uses a non-reentrant model
+  1974 ;;
+  1975                           psect	text0,class=CODE,space=0,reloc=2,group=0
+  1976                           	file	"Binary_CounterLED.c"
+  1977                           	line	20
+  1978                           global __ptext0
+  1979                           __ptext0:
+  1980  00FF74                     psect	text0
+  1981                           	file	"Binary_CounterLED.c"
+  1982                           	line	20
+  1983                           	global	__size_of_main
+  1984                           	__size_of_main	equ	__end_of_main-_main
+  1985  0000                     	
+  1986                           _main:
+  1987  00FF74                     ;incstack = 0
+  1988                           	opt	stack 31
+  1989                           	line	21
+  1990                           	
+  1991                           l699:
+  1992  00FF74                     ;Binary_CounterLED.c: 21:     unsigned char num = 1;
+  1993                           	movlw	low(01h)
+  1994  00FF74  0E01               	movwf	((c:main@num)),c
+  1995  00FF76  6E14               	line	23
+  1996                           	
+  1997                           l701:
+  1998  00FF78                     ;Binary_CounterLED.c: 22:     unsigned char Pattern;;Binary_CounterLED.c: 23:     unsign
+                                 ed char COUNTER[]={0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15};
+  1999                           	lfsr	2,(main@F15993)
+  2000  00FF78  EE20  F015         	lfsr	1,(main@COUNTER)
+  2001  00FF7C  EE10  F003         	movlw	16-1
+  2002  00FF80  0E0F               u11:
+  2003  00FF82                     	movff	plusw2,plusw1
+  2004  00FF82  006F FF6F FFE3     	decf	wreg
+  2005  00FF88  06E8               	bc	u11
+  2006  00FF8A  E2FB               
+  2007                           	line	25
+  2008                           	
+  2009                           l703:
+  2010  00FF8C                     ;Binary_CounterLED.c: 25:     ANSELB = 0xF0;
+  2011                           	movlw	low(0F0h)
+  2012  00FF8C  0EF0               	movlb	58	; () banked
+  2013  00FF8E  013A               	movwf	((14928))&0ffh	;volatile
+  2014  00FF90  6F50               	line	26
+  2015                           	
+  2016                           l705:; BSR set to: 58
+  2017  00FF92                     
+  2018                           ;Binary_CounterLED.c: 26:     TRISB = 0xF0;
+  2019                           	movlw	low(0F0h)
+  2020  00FF92  0EF0               	movlb	63	; () banked
+  2021  00FF94  013F               	movwf	((16323))&0ffh	;volatile
+  2022  00FF96  6FC3               	line	28
+  2023                           	
+  2024                           l707:; BSR set to: 63
+  2025  00FF98                     
+  2026                           ;Binary_CounterLED.c: 28:     ANSELCbits.ANSELC5 = 0;
+  2027                           	movlb	58	; () banked
+  2028  00FF98  013A               	bcf	((14944))&0ffh,5	;volatile
+  2029  00FF9A  9B60               	line	29
+  2030                           	
+  2031                           l709:; BSR set to: 58
+  2032  00FF9C                     
+  2033                           ;Binary_CounterLED.c: 29:     TRISCbits.TRISC5 = 1;
+  2034                           	movlb	63	; () banked
+  2035  00FF9C  013F               	bsf	((16324))&0ffh,5	;volatile
+  2036  00FF9E  8BC4               	goto	l711
+  2037  00FFA0  EFD2  F07F         	line	33
+  2038                           ;Binary_CounterLED.c: 33:     for(;;)
+  2039                           	
+  2040                           l19:; BSR set to: 63
+  2041  00FFA4                     
+  2042                           	line	35
+  2043                           	
+  2044                           l711:
+  2045  00FFA4                     ;Binary_CounterLED.c: 34:           {;Binary_CounterLED.c: 35:               Pattern = C
+                                 OUNTER[num];
+  2046                           	movf	((c:main@num)),c,w
+  2047  00FFA4  5014               	mullw	01h
+  2048  00FFA6  0D01               	movlw	low(main@COUNTER)
+  2049  00FFA8  0E03               	addwf	(prodl),c,w
+  2050  00FFAA  24F3               	movwf	c:fsr2l
+  2051  00FFAC  6ED9               	movlw	high(main@COUNTER)
+  2052  00FFAE  0E00               	addwfc	prod+1,w
+  2053  00FFB0  20F4               	movwf	1+c:fsr2l
+  2054  00FFB2  6EDA               	movf	indf2,w
+  2055  00FFB4  50DF               	movwf	((c:main@Pattern)),c
+  2056  00FFB6  6E13               	line	36
+  2057                           	
+  2058                           l713:
+  2059  00FFB8                     ;Binary_CounterLED.c: 36:               PORTB = Pattern;
+  2060                           	movff	(c:main@Pattern),(16331)	;volatile
+  2061  00FFB8  0060  F04F  FFCB   	line	37
+  2062                           	
+  2063                           l715:
+  2064  00FFBE                     ;Binary_CounterLED.c: 37:               _delay((unsigned long)((500)*(8000000/4000.0)));
+                                 
+  2065                           	opt asmopt_push
+  2066                           opt asmopt_off
+  2067                           movlw  6
+  2068  00FFBE  0E06               movwf	(??_main+0+0+1)&0ffh,c,f
+  2069  00FFC0  6E02               movlw	19
+  2070  00FFC2  0E13               movwf	(??_main+0+0)&0ffh,c,f
+  2071  00FFC4  6E01               	movlw	174
+  2072  00FFC6  0EAE               u37:
+  2073  00FFC8                     decfsz	wreg,f
+  2074  00FFC8  2EE8               	bra	u37
+  2075  00FFCA  D7FE               	decfsz	(??_main+0+0)&0ffh,c,f
+  2076  00FFCC  2E01               	bra	u37
+  2077  00FFCE  D7FC               	decfsz	(??_main+0+0+1)&0ffh,c,f
+  2078  00FFD0  2E02               	bra	u37
+  2079  00FFD2  D7FA               opt asmopt_pop
+  2080                           
+  2081                           	line	38
+  2082                           	
+  2083                           l717:
+  2084  00FFD4                     ;Binary_CounterLED.c: 38:               if(num ==16) num = 1;
+  2085                           		movlw	16
+  2086  00FFD4  0E10               	xorwf	((c:main@num)),c,w
+  2087  00FFD6  1814               	btfss	status,2
+  2088  00FFD8  A4D8               	goto	u21
+  2089  00FFDA  EFF1  F07F         	goto	u20
+  2090  00FFDE  EFF3  F07F         
+  2091                           u21:
+  2092  00FFE2                     	goto	l721
+  2093  00FFE2  EFF7  F07F         u20:
+  2094  00FFE6                     	
+  2095                           l719:
+  2096  00FFE6                     	movlw	low(01h)
+  2097  00FFE6  0E01               	movwf	((c:main@num)),c
+  2098  00FFE8  6E14               	goto	l711
+  2099  00FFEA  EFD2  F07F         	line	39
+  2100                           ;Binary_CounterLED.c: 39:               else num++;
+  2101                           	
+  2102                           l20:
+  2103  00FFEE                     	
+  2104                           l721:
+  2105  00FFEE                     	incf	((c:main@num)),c
+  2106  00FFEE  2A14               	goto	l711
+  2107  00FFF0  EFD2  F07F         	
+  2108                           l21:
+  2109  00FFF4                     	line	40
+  2110                           ;Binary_CounterLED.c: 40:           }
+  2111                           	goto	l711
+  2112  00FFF4  EFD2  F07F         	
+  2113                           l22:
+  2114  00FFF8                     	line	43
+  2115                           	
+  2116                           l23:
+  2117  00FFF8                     	global	start
+  2118                           	goto	start
+  2119  00FFF8  EFFE  F07F         	opt stack 0
+  2120                           GLOBAL	__end_of_main
+  2121                           	__end_of_main:
+  2122  00FFFC                     	signat	_main,89
+  2123                           	GLOBAL	__activetblptr
+  2124                           __activetblptr	EQU	0
+  2125  0000                     	psect	intsave_regs,class=BIGRAM,space=1,noexec
+  2126                           	PSECT	rparam,class=COMRAM,space=1,noexec
+  2127                           	GLOBAL	__Lrparam
+  2128                           	FNCONF	rparam,??,?
+  2129                           	GLOBAL	___rparam_used
+  2130                           	___rparam_used EQU 1
+  2131  0000                     	GLOBAL	___param_bank
+  2132                           	___param_bank EQU 0
+  2133  0000                     GLOBAL	__Lparam, __Hparam
+  2134                           GLOBAL	__Lrparam, __Hrparam
+  2135                           __Lparam	EQU	__Lrparam
+  2136  0000                     __Hparam	EQU	__Hrparam
+  2137  0000                     	end
+
+
+Data Sizes:
+    Strings     0
+    Constant    0
+    Data        16
+    BSS         0
+    Persistent  0
+    Stack       0
+
+Auto Spaces:
+    Space          Size  Autos    Used
+    COMRAM           95     20      36
+    BANK0           160      0       0
+    BANK1           256      0       0
+    BANK2           256      0       0
+    BANK3           256      0       0
+    BANK4           256      0       0
+    BANK5           256      0       0
+    BANK6           256      0       0
+    BANK7           256      0       0
+    BANK8           256      0       0
+    BANK9           256      0       0
+    BANK10          256      0       0
+    BANK11          256      0       0
+    BANK12          256      0       0
+    BANK13          256      0       0
+    BANK14          256      0       0
+    BANK15          256      0       0
+
+Pointer List with Targets:
+
+    None.
+
+Critical Paths under _main in COMRAM
+
+    None.
+
+Critical Paths under _main in BANK0
+
+    None.
+
+Critical Paths under _main in BANK1
+
+    None.
+
+Critical Paths under _main in BANK2
+
+    None.
+
+Critical Paths under _main in BANK3
+
+    None.
+
+Critical Paths under _main in BANK4
+
+    None.
+
+Critical Paths under _main in BANK5
+
+    None.
+
+Critical Paths under _main in BANK6
+
+    None.
+
+Critical Paths under _main in BANK7
+
+    None.
+
+Critical Paths under _main in BANK8
+
+    None.
+
+Critical Paths under _main in BANK9
+
+    None.
+
+Critical Paths under _main in BANK10
+
+    None.
+
+Critical Paths under _main in BANK11
+
+    None.
+
+Critical Paths under _main in BANK12
+
+    None.
+
+Critical Paths under _main in BANK13
+
+    None.
+
+Critical Paths under _main in BANK14
+
+    None.
+
+Critical Paths under _main in BANK15
+
+    None.
+
+Call Graph Tables:
+
+ ---------------------------------------------------------------------------------
+ (Depth) Function   	        Calls       Base Space   Used Autos Params    Refs
+ ---------------------------------------------------------------------------------
+ (0) _main                                                20    20      0      60
+                                              0 COMRAM    20    20      0
+ ---------------------------------------------------------------------------------
+ Estimated maximum stack depth 0
+ ---------------------------------------------------------------------------------
+
+ Call Graph Graphs:
+
+ _main (ROOT)
+
+ Address spaces:
+Name               Size   Autos  Total    Cost      Usage
+BIGRAM             FFF      0       0      37        0.0%
+EEDATA             400      0       0       0        0.0%
+BITBANK15          100      0       0      30        0.0%
+BANK15             100      0       0      31        0.0%
+BITBANK14          100      0       0      28        0.0%
+BANK14             100      0       0      29        0.0%
+BITBANK13          100      0       0      36        0.0%
+BANK13             100      0       0      27        0.0%
+BITBANK12          100      0       0      35        0.0%
+BANK12             100      0       0      26        0.0%
+BITBANK11          100      0       0      34        0.0%
+BANK11             100      0       0      25        0.0%
+BITBANK10          100      0       0      33        0.0%
+BANK10             100      0       0      24        0.0%
+BITBANK9           100      0       0      22        0.0%
+BANK9              100      0       0      23        0.0%
+BITBANK8           100      0       0      20        0.0%
+BANK8              100      0       0      21        0.0%
+BITBANK7           100      0       0      18        0.0%
+BANK7              100      0       0      19        0.0%
+BITBANK6           100      0       0      16        0.0%
+BANK6              100      0       0      17        0.0%
+BITBANK5           100      0       0      14        0.0%
+BANK5              100      0       0      15        0.0%
+BITBANK4           100      0       0      12        0.0%
+BANK4              100      0       0      13        0.0%
+BITBANK3           100      0       0      10        0.0%
+BANK3              100      0       0      11        0.0%
+BITBANK2           100      0       0       8        0.0%
+BANK2              100      0       0       9        0.0%
+BITBANK1           100      0       0       6        0.0%
+BANK1              100      0       0       7        0.0%
+BITBANK0            A0      0       0       4        0.0%
+BANK0               A0      0       0       5        0.0%
+BITCOMRAM           5F      0       0       0        0.0%
+COMRAM              5F     14      24       1       37.9%
+BITSFR_8             0      0       0     200        0.0%
+SFR_8                0      0       0     200        0.0%
+BITSFR_7             0      0       0     200        0.0%
+SFR_7                0      0       0     200        0.0%
+BITSFR_6             0      0       0     200        0.0%
+SFR_6                0      0       0     200        0.0%
+BITSFR_5             0      0       0     200        0.0%
+SFR_5                0      0       0     200        0.0%
+BITSFR_4             0      0       0     200        0.0%
+SFR_4                0      0       0     200        0.0%
+BITSFR_3             0      0       0     200        0.0%
+SFR_3                0      0       0     200        0.0%
+BITSFR_2             0      0       0     200        0.0%
+SFR_2                0      0       0     200        0.0%
+BITSFR_1             0      0       0     200        0.0%
+SFR_1                0      0       0     200        0.0%
+BITSFR               0      0       0     200        0.0%
+SFR                  0      0       0     200        0.0%
+STACK                0      0       0       2        0.0%
+NULL                 0      0       0       0        0.0%
+ABS                  0      0      24      32        0.0%
+DATA                 0      0      24       3        0.0%
+CODE                 0      0       0       0        0.0%
+
+
+Microchip Technology PIC18 Macro Assembler V2.00 build -1524193055 
+Symbol Table                                                                                   Tue Jun 11 15:22:23 2019
+
+            __CFG_CP$OFF 000000                       l20 FFEE                       l21 FFF4  
+                     l22 FFF8                       l23 FFF8                       l19 FFA4  
+                     u11 FF82                       u20 FFE6                       u21 FFE2  
+                     u37 FFC8              main@Pattern 0013              __CFG_LVP$ON 000000  
+                    l701 FF78                      l711 FFA4                      l703 FF8C  
+                    l721 FFEE                      l713 FFB8                      l705 FF92  
+                    l715 FFBE                      l707 FF98                      l717 FFD4  
+                    l709 FF9C                      l719 FFE6                      l699 FF74  
+                    prod 003FF3                      wreg 003FE8            __CFG_BBEN$OFF 000000  
+           __CFG_ZCD$OFF 000000                     _main FF74                     indf2 003FDF  
+                   fsr1l 003FE1                     fsr2l 003FD9                     prodl 003FF3  
+                   start FFFC            __CFG_CSWEN$ON 000000             ___param_bank 000000  
+                  ?_main 0001            __CFG_WDTE$OFF 000000           __CFG_DEBUG$OFF 000000  
+                  _PORTB 003FCB                    _TRISB 003FC3           __CFG_FCMEN$OFF 000000  
+          __CFG_WRTB$OFF 000000            __CFG_WRTC$OFF 000000            __CFG_WRTD$OFF 000000  
+     __CFG_MCLRE$EXTMCLR 000000                    tablat 003FF5                    plusw1 003FE3  
+                  plusw2 003FDB                    status 003FD8          __initialization FF4C  
+           __end_of_main FFFC           __CFG_SAFEN$OFF 000000                   ??_main 0001  
+         __CFG_PR1WAY$ON 000000            __activetblptr 000000                   _ANSELB 003A50  
+         __CFG_WDTCCS$SC 000000       __CFG_RSTOSC$EXTOSC 000000           __CFG_XINST$OFF 000000  
+         __CFG_STVREN$ON 000000             __pdataCOMRAM 0015                   tblptrh 003FF7  
+                 tblptrl 003FF6                   tblptru 003FF8               __accesstop 0060  
+__end_of__initialization FF6E          __CFG_FEXTOSC$HS 000000            ___rparam_used 000001  
+         __pcstackCOMRAM 0001          __CFG_IVT1WAY$ON 000000          __CFG_MVECEN$OFF 000000  
+        __CFG_PPS1WAY$ON 000000      __CFG_PWRTS$PWRT_OFF 000000                  __Hparam 0000  
+                __Lparam 0000                  __pcinit FF4C                  __ramtop 1000  
+                __ptext0 FF74          __CFG_WRTAPP$OFF 000000          __CFG_WRTSAF$OFF 000000  
+                main@num 0014     end_of_initialization FF6E                  postdec1 003FE5  
+                postinc0 003FEE               main@F15993 0015    __CFG_WDTCPS$WDTCPS_31 000000  
+              _TRISCbits 003FC4            __pidataCOMRAM FF3C      start_initialization FF4C  
+       __CFG_LPBOREN$OFF 000000   __CFG_BBSIZE$BBSIZE_512 000000      __CFG_BORV$VBOR_2P45 000000  
+              copy_data0 FF60                 __Hrparam 0000                 __Lrparam 0000  
+     __CFG_BOREN$SBORDIS 000000               _ANSELCbits 003A60            __size_of_main 0088  
+   __CFG_WDTCWS$WDTCWS_7 000000        __CFG_CLKOUTEN$OFF 000000              main@COUNTER 0003  
